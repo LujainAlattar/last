@@ -20,7 +20,7 @@
                     <div class="card mb-4">
                         <br>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('user-dashboard.store') }}">
+                            <form method="POST" action="{{ route('teacher-dashboard.store') }}">
                                 @csrf
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>

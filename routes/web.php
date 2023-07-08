@@ -6,6 +6,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,9 +25,8 @@ use App\Http\Controllers\UserController;
 //     return view('welcome');
 // });
 
-Route::get('/', function () {
-    return view('home.index');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
 Route::view('/about', 'home.about')->name('about');
 
@@ -57,9 +60,18 @@ Route::get('/admins', function () {
 
 
 // route to user controller and dashboard
-Route::resource('user-dashboard', UserController::class);
+Route::resource('/user-dashboard', UserController::class);
+Route::get('/user-search',[UserController::class,'search']);
 
 
-Route::get('/create', function () {
-    return view('admin.users.create');
-});
+// route to teacher controller and dashboard
+Route::resource('/teacher-dashboard', TeacherController::class);
+Route::get('/teacher-search',[TeacherController::class,'search']);
+
+
+// route to subject controller and dashboard
+Route::resource('/subject-dashboard', SubjectController::class);
+Route::get('/subject-search',[SubjectController::class,'search']);
+
+
+

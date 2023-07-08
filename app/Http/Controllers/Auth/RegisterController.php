@@ -32,8 +32,6 @@ class RegisterController extends Controller
         $user->password = Hash::make($request->password);
         $user->role_id = 2;
 
-        $user->img = 'defualt_profile.jpg'; // Replace 'imgd.png' with the desired default image filename
-
         $user->save();
 
         Auth::login($user);

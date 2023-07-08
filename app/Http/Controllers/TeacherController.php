@@ -3,29 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Subject;
+use App\Models\Classes;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 
-class UserController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::where('role_id', 2)->get();
-        return view('admin.users.index', compact('users'));
+        $users = User::where('role_id', 3)->get();
+        return view('admin.teachers.index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
+
     public function create()
     {
-        return view('admin.users.create');
+        $subjects = Subject::all(); // Retrieve all subjects from the database
+        return view('admin.teachers.create', compact('subjects'));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +46,10 @@ class UserController extends Controller
             'location' => 'required',
             'password' => 'required|min:6',
             'repassword' => 'required|same:password',
+            'subject' => 'required|exists:subjects,id',
+            'price' => 'required',
         ]);
+
 
         $user = new User();
         $user->name = $request->input('name');
@@ -49,12 +58,17 @@ class UserController extends Controller
         $user->phone = $request->input('phone');
         $user->location = $request->input('location');
         $user->password = Hash::make($request->input('password'));
-        $user->role_id = 2;
+        $user->role_id = 3;
         $user->age = now()->diffInYears($request->input('birthday')); // Calculate the age
-
         $user->save();
 
-        return redirect()->route('user-dashboard.index')->with('flash_message', 'User added successfully.');
+        $class = new Classes();
+        $class->subject_id = $request->input('subject');
+        $class->user_id = $user->id;
+        $class->price = $request->input('price');
+        $class->save();
+
+        return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User added successfully.');
     }
 
     /**
@@ -63,7 +77,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
-        return view('admin.users.show')->with('user', $user);
+        return view('admin.teachers.show')->with('user', $user);
     }
 
     /**
@@ -71,8 +85,10 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-       $user = User::find($id);
-        return view('admin.users.edit')->with('user', $user);
+        $user = User::find($id);
+        $class = Classes::where('user_id', $id)->get();
+        $subject = Subject::find($class->subject_id);
+        return view('admin.teachers.edit')->with('user', $user)->with('classes', $class);
     }
 
     /**
@@ -97,10 +113,14 @@ class UserController extends Controller
         $user->location = $request->input('location');
         $user->password = Hash::make($request->input('password'));
         $user->age = now()->diffInYears($request->input('birthday')); // Calculate the age
-
         $user->save();
 
-        return redirect()->route('user-dashboard.index')->with('flash_message', 'User updated successfully.');
+        $class = Classes::where('user_id', $id)->get();
+        $class->subject_id = $request->input('subject');
+        $class->price = $request->input('price');
+        $class->save();
+
+        return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User updated successfully.');
     }
 
     /**
@@ -111,7 +131,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return redirect()->route('user-dashboard.index')->with('flash_message', 'User deleted successfully.');
+        return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User deleted successfully.');
     }
 
 
@@ -119,7 +139,7 @@ class UserController extends Controller
     {
         $output = "";
         $searchTerm = $request->input('search');
-        $users = User::where('role_id', 2)
+        $users = User::where('role_id', 3)
             ->where(function ($query) use ($searchTerm) {
                 $query->where('name', 'like', '%' . $searchTerm . '%')
                     ->orWhere('email', 'like', '%' . $searchTerm . '%');
@@ -153,5 +173,4 @@ class UserController extends Controller
 
         return $output;
     }
-
 }

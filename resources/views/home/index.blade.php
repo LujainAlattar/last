@@ -4,14 +4,24 @@
 @endsection
 
 @section('header-style')
-<style>
-    .card_teacher{
-        box-shadow: 0 0 10px rgba(75, 75, 75, 0.567);
-    }
-    .card_teacher_body{
-        padding: 10px
-    }
-</style>
+    <style>
+        .card_teacher {
+            box-shadow: 0 0 10px rgba(75, 75, 75, 0.567);
+        }
+
+        .card_teacher_body {
+            padding: 10px
+        }
+
+        .card-img-top{
+            width: 300px;
+            height: 300px;
+        }
+        .card_teacher{
+            width: 330px;
+            height: 600px;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -46,33 +56,6 @@
     </div>
     <!-- end header section -->
 
-    <!-- about section -->
-    {{-- <section class="about_section layout_padding">
-        <div class="container">
-            <h2 class="main-heading ">
-                About School
-            </h2>
-            <p class="text-center">
-                Empowering learners with personalized private classes. Passionate instructors. Tailored education for all
-                levels. Join us and unlock your potential.
-            </p>
-            <div class="about_img-box ">
-                <img src="{{ asset('home/images/kids.jpg') }}" alt="" class="img-fluid w-100">
-            </div>
-            <div class="d-flex justify-content-center mt-5">
-                <a href="{{ route('about') }}" class="call_to-btn  ">
-
-                    <span>
-                        Read More
-                    </span>
-                    <img src="{{ asset('home/images/right-arrow.png') }}" alt="">
-                </a>
-            </div>
-        </div>
-    </section> --}}
-
-
-    <!-- about section -->
 
     <!-- teacher section -->
     <section class="teacher_section layout_padding-bottom">
@@ -87,33 +70,44 @@
             <div class="teacher_container layout_padding2">
                 <div class="card-deck">
                     {{-- cards with pagination --}}
-                    <div class="w3-third card_teacher">
-                        <div class="w3-white w3-text-grey w3-card-4 card_teacher_body">
-                            <div class="w3-display-container">
-                                <img class="card-img-top" src="{{ asset('home/images/teacher-1.jpg') }}"
-                                    alt="Card image cap">
-                                <div class="w3-display-bottomleft w3-container w3-text-black" style="display: flex; justify-content:space-between; align-items:center;">
-                                    <h2>Jane Doe</h2>
-                                    <h5>$ 123</h5>
+                    @foreach ($users as $user)
+                        <div class="w3-third card_teacher ml-4">
+                            <div class="w3-white w3-text-grey w3-card-4 card_teacher_body">
+                                <div class="w3-display-container">
+                                    <img class="card-img-top" src="{{ asset('storage/uploads/images/' . $user->img) }}"
+                                        alt="Card image cap">
+                                    <div class="w3-display-bottomleft w3-container w3-text-black"
+                                        style="display: flex; justify-content:space-between; align-items:center;">
+                                        <h2>{{ $user->name }}</h2>
+                                        <h5>$ {{ $user->price }}</h5>
+                                    </div>
+                                </div>
+                                <div class="w3-container">
+                                    <p><i
+                                            class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->occupation }}
+                                    </p>
+                                    <p><i
+                                            class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->location }}
+                                    </p>
+                                    <p><i
+                                            class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->email }}
+                                    </p>
+                                    <p><i
+                                            class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->phone }}
+                                    </p>
+                                </div>
+                                <div class="d-flex justify-content-center mt-5">
+                                    <a href="{{ route('teacher') }}" class="call_to-btn">
+                                        <span>
+                                            Read More
+                                        </span>
+                                        <img src="{{ asset('home/images/right-arrow.png') }}" alt="">
+                                    </a>
                                 </div>
                             </div>
-                            <div class="w3-container">
-                                <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Designer</p>
-                                <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>London, UK</p>
-                                <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>ex@mail.com</p>
-                                <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>1224435534</p>
-                            </div>
-                            <div class="d-flex justify-content-center mt-5">
-                                <a href="{{ route('about') }}" class="call_to-btn  ">
-
-                                    <span>
-                                        Read More
-                                    </span>
-                                    <img src="{{ asset('home/images/right-arrow.png') }}" alt="">
-                                </a>
-                            </div>
                         </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
 

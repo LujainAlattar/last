@@ -7,6 +7,8 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
+
+
     @yield('title')
 
     <meta name="description" content="" />
@@ -46,6 +48,7 @@
     <script src="{{ asset('admin/js/config.js') }}"></script>
 
 
+
     @yield('header-style')
 
 </head>
@@ -75,50 +78,47 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item active">
-                        <a href="{{route('admin')}}" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('admin') ? 'active' : '' }}">
+                        <a href="{{ route('admin') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Dashboard</div>
                         </a>
                     </li>
 
-                    <li class="menu-item">
-                        <a href="" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('user-dashboard.index') ? 'active' : '' }}">
+                        <a href="{{ route('user-dashboard.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons fa-solid fa-users"></i>
                             <div data-i18n="Analytics">Users</div>
                         </a>
                     </li>
 
-                    <li class="menu-item">
-                        <a href="" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('teacher-dashboard.index') ? 'active' : '' }}">
+                        <a href="{{ route('teacher-dashboard.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons fa-solid fa-user-tie"></i>
                             <div data-i18n="Analytics">Teachers</div>
                         </a>
                     </li>
 
-
-                    <li class="menu-item">
-                        <a href="" class="menu-link">
+                    <li class="menu-item {{ request()->routeIs('subject-dashboard.index') ? 'active' : '' }}">
+                        <a href="{{ route('subject-dashboard.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons fa-solid fa-book"></i>
                             <div data-i18n="Analytics">Subjects</div>
                         </a>
                     </li>
 
-
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="#" class="menu-link">
                             <i class="menu-icon tf-icons fa-solid fa-credit-card"></i>
                             <div data-i18n="Analytics">Booking & Payment</div>
                         </a>
                     </li>
 
                     <li class="menu-item">
-                        <a href="" class="menu-link">
+                        <a href="#" class="menu-link">
                             <i class="menu-icon tf-icons fa-regular fa-star-half-stroke"></i>
                             <div data-i18n="Analytics">Reviews</div>
                         </a>
                     </li>
-
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -137,13 +137,7 @@
 
                     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                         <!-- Search -->
-                        <div class="navbar-nav align-items-center">
-                            <div class="nav-item d-flex align-items-center">
-                                <i class="bx bx-search fs-4 lh-0"></i>
-                                <input type="text" class="form-control border-0 shadow-none"
-                                    placeholder="Search..." aria-label="Search..." />
-                            </div>
-                        </div>
+
                         <!-- /Search -->
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">

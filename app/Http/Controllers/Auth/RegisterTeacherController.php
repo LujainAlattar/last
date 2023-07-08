@@ -33,9 +33,6 @@ class RegisterTeacherController extends Controller
         $user->password = Hash::make($request->password);
         $user->role_id = 3;
 
-        // Set a default value for the profile image
-        $user->img = 'defualt_profile.jpg';
-
         $user->save();
 
         Auth::login($user);

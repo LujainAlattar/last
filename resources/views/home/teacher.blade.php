@@ -1,3 +1,5 @@
+@extends('layout.otherMaster')
+
 @section('title')
     <title>Teachers</title>
 @endsection
