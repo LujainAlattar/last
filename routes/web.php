@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StudentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,5 +75,11 @@ Route::get('/teacher-search',[TeacherController::class,'search']);
 Route::resource('/subject-dashboard', SubjectController::class);
 Route::get('/subject-search',[SubjectController::class,'search']);
 
+
+// route to user profile
+Route::get('/user-profile/{id}', [StudentController::class, 'index'])->name('user-profile');
+Route::get('/edit-user-profile/{id}', [StudentController::class, 'edit'])->name('edit-user-profile');
+Route::get('/edit-profile/{id}', [StudentController::class, 'update'])->name('edit-profile');
+Route::get('/password-edit/{id}', [StudentController::class, 'updatepass'])->name('password-edit');
 
 

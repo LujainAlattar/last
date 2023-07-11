@@ -14,7 +14,18 @@ class Classes extends Model
         'user_id',
         'subject_id',
         'price',
-        
+
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
 
 }

@@ -18,7 +18,7 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'your_name' => 'required|string|email',
+            'your_email' => 'required|string|email',
             'pass' => 'required|string',
         ]);
 
@@ -33,19 +33,18 @@ class LoginController extends Controller
             if ($user->role_id == 1) {
                 // Redirect to the dashboard for users with role_id = 1
                 Session::put('role', 'admin');
-                return redirect()->intended('/dashboard');
+                return redirect()->route('admins');
             } elseif ($user->role_id == 2) {
                 // Redirect to the hello page for users with role_id = 2
                 // session::put('user_img', $user->img);
                 Session::put('user_id', $user->id);
                 Session::put('role', 'user');
-                return redirect()->intended('/home-page');
+                return redirect()->route('home');
             } elseif ($user->role_id == 3) {
                 // Handle other role IDs as needed
-                session::put('user_img', $user->img);
                 Session::put('user_id', $user->id);
                 Session::put('role', 'teacher');
-                return redirect()->intended('/Lessor');
+                return redirect()->route('home');
             }
         } else {
             // Authentication failed

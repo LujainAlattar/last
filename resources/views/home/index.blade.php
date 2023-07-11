@@ -79,7 +79,7 @@
                                     <div class="w3-display-bottomleft w3-container w3-text-black"
                                         style="display: flex; justify-content:space-between; align-items:center;">
                                         <h2>{{ $user->name }}</h2>
-                                        <h5>$ {{ $user->price }}</h5>
+                                        {{-- <h5>$ {{ $user->$class->price }}</h5> --}}
                                     </div>
                                 </div>
                                 <div class="w3-container">

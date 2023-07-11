@@ -22,13 +22,16 @@
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
                         <form method="POST" class="register-form" id="register-form" action="{{ route('register') }}">
+                            @csrf
                             <div class="form-group">
                                 <label for="name"><i class="fa-solid fa-user"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name" value="{{ old('name') }}"/>
+                                <input type="text" name="name" id="name" placeholder="Your Name"
+                                    value="{{ old('name') }}" />
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="fa-solid fa-envelope"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Your Email" value="{{ old('email') }}"/>
+                                <input type="email" name="email" id="email" placeholder="Your Email"
+                                    value="{{ old('email') }}" />
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="fa-solid fa-lock"></i></label>
@@ -92,12 +95,8 @@
             }
         }
     </script>
-    <script src="{{ asset('auth/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('auth/js/main.js') }}"></script>
-@endsection
 
-@section('script-content')
-    @parent
+
     <script src="{{ asset('auth/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('auth/js/main.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert/sweetalert.all.js') }}"></script>

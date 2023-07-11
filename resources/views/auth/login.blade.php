@@ -26,10 +26,11 @@
                     <div class="signin-form">
                         <h2 class="form-title">login</h2>
                         <form method="POST" class="register-form" id="login-form" action="{{ route('login') }}">
+                            @csrf
                             <div class="form-group">
-                                <label for="your_name"><i class="fa-solid fa-user"></i></label>
-                                <input type="text" name="your_name" id="your_name" placeholder="Your Name" />
-                                @error('your_name')
+                                <label for="your_email"><i class="fa-solid fa-user"></i></label>
+                                <input type="text" name="your_email" id="your_email" placeholder="Your email" />
+                                @error('your_email')
                                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>

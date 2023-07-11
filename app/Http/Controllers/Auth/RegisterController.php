@@ -38,7 +38,8 @@ class RegisterController extends Controller
         session()->put('user_id', $user->id);
         session()->put('role', 'user');
 
+
         $message = 'Registered successfully!';
-        return redirect()->route('login')->with('success', $message);
+        return redirect()->route('home')->with('success', $message);
     }
 }

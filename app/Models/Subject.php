@@ -12,4 +12,9 @@ class Subject extends Model
         'id',
         'subject_name',
     ];
+
+    public function classes()
+    {
+        return $this->hasMany(Classes::class);
+    }
 }

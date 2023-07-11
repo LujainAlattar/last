@@ -59,4 +59,16 @@ class User extends Authenticatable
         }
         return null;
     }
+
+    // relation with role one role to many users
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    // reltion with classes and teacher one to one
+    public function class()
+    {
+        return $this->hasOne(Classes::class);
+    }
 }
