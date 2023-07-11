@@ -86,14 +86,12 @@ class TeacherController extends Controller
     public function edit(string $id)
     {
         $user = User::find($id);
-        $class = Classes::where('user_id', $id)->get();
-        $subject = Subject::find($class->subject_id);
-        return view('admin.teachers.edit')->with('user', $user)->with('classes', $class);
+        $class = Classes::where('user_id', $id)->first();
+        $subjects = Subject::all(); // Fetch all subjects
+        return view('admin.teachers.edit')->with('user', $user)->with('class', $class)->with('subjects', $subjects);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -112,16 +110,17 @@ class TeacherController extends Controller
         $user->phone = $request->input('phone');
         $user->location = $request->input('location');
         $user->password = Hash::make($request->input('password'));
-        $user->age = now()->diffInYears($request->input('birthday')); // Calculate the age
+        $user->age = now()->diffInYears($request->input('birthday'));
         $user->save();
 
-        $class = Classes::where('user_id', $id)->get();
-        $class->subject_id = $request->input('subject');
+        $class = Classes::where('user_id', $id)->first();
+        $class->subject_id = $request->input('subject_id');
         $class->price = $request->input('price');
         $class->save();
 
         return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

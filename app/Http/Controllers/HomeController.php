@@ -11,18 +11,9 @@ class HomeController extends Controller
     public function index()
     {
         $users = User::where('role_id', 3)->get();
-        $class = Classes::all();
-        if (session()->has('user_id')) {
+        $classes = Classes::with('subject')->whereIn('user_id', $users->pluck('id'))->get();
 
-
-            $userId = session('user_id');
-            $student = User::find($userId);
-            $userImg = $student ? $student->img : 'default_profile.jpg';
-
-            return view('home.index', compact('users', 'userImg', 'userId', 'class'));
-
-        } else {
-            return view('home.index', compact('users','class'));
-        }
+        return view('home.index', compact('users', 'classes'));
     }
+
 }

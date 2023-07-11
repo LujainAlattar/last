@@ -61,15 +61,16 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
-                    <a href="{{route('admin')}}" class="app-brand-link">
+                    <a href="{{ route('admin') }}" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <img src="{{asset('home/images/logo.png')}}" alt="logo">
+                            <img src="{{ asset('home/images/logo.png') }}" alt="logo">
                         </span>
                         <span class="app-brand-text demo menu-text fw-bolder ms-2">EduPro</span>
                     </a>
 
                     <a href="javascript:void(0);"
-                        class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none" style="background-color: #082465">
+                        class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"
+                        style="background-color: #082465">
                         <i class="bx bx-chevron-left bx-sm align-middle"></i>
                     </a>
                 </div>
@@ -147,8 +148,13 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('admin/img/avatars/1.png') }}" alt
-                                            class="w-px-40 h-auto rounded-circle" />
+                                        @if (auth()->user()->img)
+                                            <img src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
+                                                width="40" height="40" class="rounded-circle">
+                                        @else
+                                            <img src="{{ asset('path_to_default_image.jpg') }}" width="40"
+                                                height="40" class="rounded-circle">
+                                        @endif
                                     </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end">
@@ -157,12 +163,17 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div class="avatar avatar-online">
-                                                        <img src="{{ asset('admin/img/avatars/1.png') }}" alt
-                                                            class="w-px-40 h-auto rounded-circle" />
+                                                        @if (auth()->user()->img)
+                                                            <img src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
+                                                                width="40" height="40" class="rounded-circle">
+                                                        @else
+                                                            <img src="{{ asset('path_to_default_image.jpg') }}"
+                                                                width="40" height="40" class="rounded-circle">
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
+                                                    <span class="fw-semibold d-block">{{auth()->user()->name}}</span>
                                                     <small class="text-muted">Admin</small>
                                                 </div>
                                             </div>
@@ -172,12 +183,12 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ route('user-profile', auth()->user()->id) }}">
                                             <i class="bx bx-user me-2"></i>
                                             <span class="align-middle">My Profile</span>
                                         </a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                         <a class="dropdown-item" href="#">
                                             <i class="bx bx-cog me-2"></i>
                                             <span class="align-middle">Settings</span>
@@ -192,12 +203,12 @@
                                                     class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
                                             </span>
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="auth-login-basic.html">
+                                        <a class="dropdown-item" href="{{ route('logout') }}">
                                             <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
@@ -231,7 +242,9 @@
     @yield('script-content')
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('admin/vendor/libs/jquery/jquery.js') }}"></script>

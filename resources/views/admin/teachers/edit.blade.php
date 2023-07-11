@@ -95,17 +95,17 @@
                                             <span id="basic-icon-default-subject" class="input-group-text">
                                                 <i class="fa-solid fa-book"></i>
                                             </span>
-                                            <select id="basic-icon-default-subject" class="form-control" name="subject">
+                                            <select id="basic-icon-default-subject" class="form-control" name="subject_id">
                                                 <option value="">Select a subject</option>
-                                                    @foreach ($subjects as $subject)
-                                                        <option value="{{ $subject->id }}"
-                                                            {{ $class->subject_id == $subject->id ? 'selected' : '' }}>
-                                                            {{ $subject->subject_name }}
-                                                        </option>
+                                                @foreach ($subjects as $subject)
+                                                    <option value="{{ $subject->id }}"
+                                                        {{ $class->subject_id == $subject->id ? 'selected' : '' }}>
+                                                        {{ $subject->subject_name }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        @error('subject')
+                                        @error('subject_id')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>

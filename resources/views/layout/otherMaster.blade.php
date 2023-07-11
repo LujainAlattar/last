@@ -84,15 +84,18 @@
                                             <a class="nav-link dropdown-toggle" href="#"
                                                 id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
                                                 aria-haspopup="true" aria-expanded="false">
-                                                <img src="{{ asset('storage/uploads/images/' . session('user_img')) }}"
-                                                    width="40" height="40" class="rounded-circle">
-
+                                                @if (auth()->user()->img)
+                                                    <img src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
+                                                        width="40" height="40" class="rounded-circle">
+                                                @else
+                                                    <img src="{{ asset('path_to_default_image.jpg') }}" width="40"
+                                                        height="40" class="rounded-circle">
+                                                @endif
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                                 <a class="dropdown-item"
-                                                    href="{{ route('user-profile', session('user_id')) }}">Profile</a>
-
-                                                <a class="dropdown-item" href="#">Log Out</a>
+                                                    href="{{ route('user-profile', auth()->user()->id) }}">Profile</a>
+                                                <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
                                             </div>
                                         </li>
                                     </ul>

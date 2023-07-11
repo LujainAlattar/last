@@ -13,11 +13,12 @@
             padding: 10px
         }
 
-        .card-img-top{
+        .card-img-top {
             width: 300px;
             height: 300px;
         }
-        .card_teacher{
+
+        .card_teacher {
             width: 330px;
             height: 600px;
         }
@@ -79,13 +80,17 @@
                                     <div class="w3-display-bottomleft w3-container w3-text-black"
                                         style="display: flex; justify-content:space-between; align-items:center;">
                                         <h2>{{ $user->name }}</h2>
-                                        {{-- <h5>$ {{ $user->$class->price }}</h5> --}}
+                                        @if ($user->class)
+                                            <h5>$ {{ $user->class->price }}</h5>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="w3-container">
-                                    <p><i
-                                            class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->occupation }}
-                                    </p>
+                                    @if ($user->class && $user->class->subject)
+                                        <p><i
+                                                class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->class->subject->subject_name }}
+                                        </p>
+                                    @endif
                                     <p><i
                                             class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->location }}
                                     </p>
@@ -95,18 +100,19 @@
                                     <p><i
                                             class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->phone }}
                                     </p>
+
                                 </div>
-                                <div class="d-flex justify-content-center mt-5">
+                                <div class="d-flex justify-content-center mb-3">
                                     <a href="{{ route('teacher') }}" class="call_to-btn">
-                                        <span>
-                                            Read More
-                                        </span>
+                                        <span>Read More</span>
                                         <img src="{{ asset('home/images/right-arrow.png') }}" alt="">
                                     </a>
                                 </div>
                             </div>
                         </div>
                     @endforeach
+
+
 
                 </div>
             </div>
