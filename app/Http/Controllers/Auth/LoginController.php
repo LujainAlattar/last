@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-
     public function showLoginForm()
     {
         return view('auth.login');
@@ -17,15 +16,10 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $this->validate($request, [
-            'your_email' => 'required|string|email',
-            'pass' => 'required|string',
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-
-        $remember = $request->has('remember-me');
-
-
-        $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
             // Authentication passed
@@ -36,7 +30,6 @@ class LoginController extends Controller
                 return redirect()->route('admins');
             } elseif ($user->role_id == 2) {
                 // Redirect to the hello page for users with role_id = 2
-                // session::put('user_img', $user->img);
                 Session::put('user_id', $user->id);
                 Session::put('role', 'user');
                 return redirect()->route('home');
@@ -46,9 +39,9 @@ class LoginController extends Controller
                 Session::put('role', 'teacher');
                 return redirect()->route('home');
             }
-        } else {
-            // Authentication failed
-            return redirect()->back()->withErrors(['email' => 'Invalid email or password.']);
         }
+
+        // Authentication failed
+        return redirect()->back()->withErrors(['email' => 'Invalid email or password.']);
     }
 }

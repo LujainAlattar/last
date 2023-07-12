@@ -30,7 +30,7 @@ class RegisterTeacherController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = Hash::make($request->pass);
         $user->role_id = 3;
 
         $user->save();

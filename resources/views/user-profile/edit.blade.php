@@ -5,6 +5,31 @@
 @endsection
 
 @section('header-style')
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ asset('admin/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('admin/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('admin/css/demo.css') }}" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ asset('admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('admin/vendor/libs/apex-charts/apex-charts.css') }}" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="{{ asset('admin/vendor/js/helpers.js') }}"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{{ asset('admin/js/config.js') }}"></script>
+
+
+    <style>
+        .content-wrapper {
+            margin-top: -100px;
+        }
+    </style>
 @endsection
 
 
@@ -99,11 +124,8 @@
                 </div>
             </div>
         </div>
-        <!-- / Content -->
-    </div>
 
-    <div class="content-wrapper">
-        <!-- Content -->
+
 
         <div class="container-xxl flex-grow-1 container-p-y">
             <h4 class="fw-bold py-3 mb-4">update password</h4>
@@ -112,7 +134,7 @@
                     <div class="card mb-4">
                         <br>
                         <div class="card-body">
-                            <form action="{{ route('password-edit', $user->id) }}" method="POST">
+                            <form action="{{ route('edit-user-password', $user->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
@@ -122,7 +144,8 @@
                                     <label class="col-sm-2 form-label" for="basic-icon-default-pass">Password</label>
                                     <div class="col-sm-10">
                                         <div class="input-group input-group-merge" style="position: relative;">
-                                            <span id="basic-icon-default-location" class="password-toggle input-group-text"
+                                            <span id="basic-icon-default-location"
+                                                class="password-toggle input-group-text"
                                                 onclick="togglePasswordVisibility('pass')" style=" cursor: pointer;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </span>
@@ -162,7 +185,6 @@
         </div>
         <!-- / Content -->
     </div>
-
 @endsection
 
 @section('script-content')
@@ -184,4 +206,30 @@
     </script>
     <script src="{{ asset('auth/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('auth/js/main.js') }}"></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="{{ asset('admin/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('admin/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('admin/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
+
+    <script src="{{ asset('admin/vendor/js/menu.js') }}"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="{{ asset('admin/vendor/libs/apex-charts/apexcharts.js') }}"></script>
+
+    <!-- Main JS -->
+    <script src="{{ asset('admin/js/main.js') }}"></script>
+
+    <!-- Page JS -->
+    <script src="{{ asset('admin/js/dashboards-analytics.js') }}"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 @endsection

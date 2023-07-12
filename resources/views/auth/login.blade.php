@@ -29,8 +29,8 @@
                             @csrf
                             <div class="form-group">
                                 <label for="your_email"><i class="fa-solid fa-user"></i></label>
-                                <input type="text" name="your_email" id="your_email" placeholder="Your email" />
-                                @error('your_email')
+                                <input type="text" name="email" id="your_email" placeholder="Your email" />
+                                @error('email')
                                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -38,14 +38,13 @@
                             <div class="form-group">
                                 <label for="pass"><i class="fa-solid fa-lock"></i></label>
                                 <div style="position: relative;">
-                                    <input type="password" name="pass" id="pass" placeholder="Password"
-                                        style="padding-right: 30px;" />
+                                    <input type="password" name="password" id="pass" placeholder="Password" style="padding-right: 30px;" />
                                     <span class="password-toggle" onclick="togglePasswordVisibility('pass')"
                                         style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
                                         <i class="fa-solid fa-eye"></i>
                                     </span>
                                 </div>
-                                @error('pass')
+                                @error('password')
                                     <span class="alert alert-danger" role="alert">{{ $message }}</span>
                                 @enderror
                             </div>
