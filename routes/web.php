@@ -80,7 +80,9 @@ Route::get('/subject-search',[SubjectController::class,'search']);
 
 // route to user profile
 Route::get('/user-profile', [UserProfileController::class, 'index'])->name('user-profile');
+Route::get('/edit-profile', [UserProfileController::class, 'editdata'])->name('edit-profile');
 Route::get('/edit-user-profile', [UserProfileController::class, 'editdata'])->name('edit-user-profile');
-Route::get('/edit-user-profile', [UserProfileController::class, 'editpassword'])->name('edit-user-password');
-
+Route::put('/edit-user-profile/{id}', [UserProfileController::class, 'updatedata'])->name('edit-user-profile');
+Route::get('/edit-user-password', [UserProfileController::class, 'editpassword'])->name('edit-user-password');
+Route::put('/edit-user-password/{id}', [UserProfileController::class, 'updatepassword'])->name('update-user-password');
 

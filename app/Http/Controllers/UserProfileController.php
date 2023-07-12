@@ -20,7 +20,6 @@ class UserProfileController extends Controller
         return view('user-profile.profile', compact('user'));
     }
 
-
     public function editdata()
     {
         $userId = session('user_id');
@@ -28,59 +27,37 @@ class UserProfileController extends Controller
         return view('user-profile.edit', compact('user'));
     }
 
-
     public function updatedata(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'birthday' => 'required|date',
-            'email' => 'required|email',
-            'phone' => 'required|regex:/^07\d{8}$/',
-            'location' => 'required',
-            'password' => 'required|min:6',
-        ]);
-
         $user = User::find($id);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->birthday = $request->input('birthday');
         $user->phone = $request->input('phone');
         $user->location = $request->input('location');
-        $user->password = Hash::make($request->input('password'));
         $user->age = now()->diffInYears($request->input('birthday'));
         $user->save();
-        return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User updated successfully.');
+        return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');
     }
 
-
-
-    public function editpassword(string $id)
+    public function editpassword()
     {
-        $user = User::find($id);
+        $userId = session('user_id');
+        $user = User::find($userId);
+        return view('user-profile.edit', compact('user'));
     }
-
 
     public function updatepassword(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required',
-            'birthday' => 'required|date',
-            'email' => 'required|email',
-            'phone' => 'required|regex:/^07\d{8}$/',
-            'location' => 'required',
             'password' => 'required|min:6',
+            'repassword' => 'required|same:password',
         ]);
 
         $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->birthday = $request->input('birthday');
-        $user->phone = $request->input('phone');
-        $user->location = $request->input('location');
         $user->password = Hash::make($request->input('password'));
-        $user->age = now()->diffInYears($request->input('birthday'));
-        $user->save();
-        return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User updated successfully.');
+        $user->update();
+        return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');
     }
 
 
@@ -109,7 +86,7 @@ class UserProfileController extends Controller
         $user->location = $request->input('location');
         $user->password = Hash::make($request->input('password'));
         $user->age = now()->diffInYears($request->input('birthday'));
-        $user->save();
+        $user->update();
         return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User updated successfully.');
     }
 }

@@ -24,7 +24,6 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('admin/js/config.js') }}"></script>
 
-
     <style>
         .content-wrapper {
             margin-top: -100px;
@@ -32,24 +31,21 @@
     </style>
 @endsection
 
-
 @section('content')
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">update profile</h4>
+            <h4 class="fw-bold py-3 mb-4">Update Profile</h4>
             <div class="row">
                 <div class="col-xxl">
                     <div class="card mb-4">
                         <br>
                         <div class="card-body">
-                            <form action="{{ route('edit-profile', $user->id) }}" method="POST">
+                            <form action="{{ route('edit-user-profile', $user->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-
-                                <input type="hidden" name="id" value="{{ $user->id }}" id="id" />
 
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
@@ -114,7 +110,7 @@
                                 </div>
                                 <div class="row justify-content-end">
                                     <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Send</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
                                         <a href="{{ route('user-profile') }}" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>
@@ -126,19 +122,16 @@
         </div>
 
 
-
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">update password</h4>
+            <h4 class="fw-bold py-3 mb-4">Update Password</h4>
             <div class="row">
                 <div class="col-xxl">
                     <div class="card mb-4">
                         <br>
                         <div class="card-body">
-                            <form action="{{ route('edit-user-password', $user->id) }}" method="POST">
+                            <form action="{{ route('update-user-password', $user->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-
-                                <input type="hidden" name="id" value="{{ $user->id }}" id="id" />
 
                                 <div class="row mb-3">
                                     <label class="col-sm-2 form-label" for="basic-icon-default-pass">Password</label>
@@ -173,7 +166,7 @@
 
                                 <div class="row justify-content-end">
                                     <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Send</button>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
                                         <a href="{{ route('user-profile') }}" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>

@@ -59,7 +59,6 @@
                                 </div>
                             </div>
                             <hr>
-                            <hr>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">Address</h6>
@@ -71,7 +70,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info" href="{{ route('edit-user-profile') }}">Edit Profile</a>
+                                    <a class="btn btn-info" href="{{ route('edit-profile') }}">Edit Profile</a>
                                 </div>
                             </div>
                         </div>
