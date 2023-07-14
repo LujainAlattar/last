@@ -94,7 +94,7 @@
                                             </a>
                                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                                 <a class="dropdown-item"
-                                                    href="{{ route('user-profile')}}">Profile</a>
+                                                    href="{{ route('user-profile') }}">Profile</a>
                                                 <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
                                             </div>
                                         </li>
@@ -139,9 +139,7 @@
     <script type="text/javascript" src="{{ asset('home/js/bootstrap.js') }}"></script>
     <!-- progreesbar script -->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 </body>
 

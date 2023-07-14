@@ -83,6 +83,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
                                 </li>
+
                                 @if (auth()->check())
                                     <ul class="navbar-nav">
                                         <li class="nav-item dropdown">
@@ -132,11 +133,10 @@
 
         <!-- footer section -->
         <section class="container-fluid footer_section">
-            <p>
-                Copyright &copy; 2019 All Rights Reserved By
-                <a href="https://html.design/">Free Html Templates</a>
-            </p>
-        </section>
+        <p>
+            Copyright &copy; 2023 All Rights Reserved</a>
+        </p>
+    </section>
         <!-- footer section -->
 
 

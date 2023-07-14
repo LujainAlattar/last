@@ -85,4 +85,6 @@ Route::get('/edit-user-profile', [UserProfileController::class, 'editdata'])->na
 Route::put('/edit-user-profile/{id}', [UserProfileController::class, 'updatedata'])->name('edit-user-profile');
 Route::get('/edit-user-password', [UserProfileController::class, 'editpassword'])->name('edit-user-password');
 Route::put('/edit-user-password/{id}', [UserProfileController::class, 'updatepassword'])->name('update-user-password');
+Route::get('/user-profile/editimg/{id}', [UserProfileController::class, 'editimg'])->name('edit-user-img');
+Route::put('/user-profile/updateimg/{id}', [UserProfileController::class, 'updateimg'])->name('update-user-img');
 

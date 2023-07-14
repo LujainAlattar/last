@@ -64,29 +64,26 @@ class UserProfileController extends Controller
     public function editimg(string $id)
     {
         $user = User::find($id);
+        return view('user-profile.edit', compact('user'));
     }
-
 
     public function updateimg(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required',
-            'birthday' => 'required|date',
-            'email' => 'required|email',
-            'phone' => 'required|regex:/^07\d{8}$/',
-            'location' => 'required',
-            'password' => 'required|min:6',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the uploaded image file
         ]);
 
         $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->birthday = $request->input('birthday');
-        $user->phone = $request->input('phone');
-        $user->location = $request->input('location');
-        $user->password = Hash::make($request->input('password'));
-        $user->age = now()->diffInYears($request->input('birthday'));
-        $user->update();
-        return redirect()->route('teacher-dashboard.index')->with('flash_message', 'User updated successfully.');
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('public/uploads/images', $imageName);
+            $user->img = $imageName;
+        }
+
+        $user->save();
+
+        return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');
     }
 }
