@@ -1,7 +1,7 @@
 @extends('layout.adminMaster')
 
 @section('title')
-    <title>teacher show</title>
+    <title>user edit</title>
 @endsection
 
 @section('header-style')
@@ -116,35 +116,6 @@
                                                 class="form-control location-mask" placeholder="Location" name="location"
                                                 aria-label="Location" aria-describedby="basic-icon-default-location"
                                                 value="{{ $user->location }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 form-label" for="basic-icon-default-location">Subject</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span id="basic-icon-default-subject" class="input-group-text">
-                                                <i class="fa-solid fa-book"></i>
-                                            </span>
-                                            <input type="text" id="basic-icon-default-location"
-                                                class="form-control location-mask" placeholder="Location" name="location"
-                                                aria-label="Location" aria-describedby="basic-icon-default-location"
-                                                value="{{ $class->subject->subject_name ?? '' }}" readonly/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 form-label" for="basic-icon-default-price">Price / Hrs</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span id="basic-icon-default-price" class="input-group-text">
-                                                <i class="fa-regular fa-money-bill-1"></i>
-                                            </span>
-                                            <input type="number" id="basic-icon-default-price"
-                                                class="form-control price-mask" placeholder="Price" aria-label="Price"
-                                                aria-describedby="basic-icon-default-price" name="price"
-                                                value="{{ $class->price ?? '' }}" />
                                         </div>
                                     </div>
                                 </div>

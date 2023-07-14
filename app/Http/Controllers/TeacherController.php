@@ -77,9 +77,10 @@ class TeacherController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
-        return view('admin.teachers.show')->with('user', $user);
+        $class = Classes::where('user_id', $id)->first();
+        $subject = $class->subject; // Access the associated subject
+        return view('admin.teachers.show', compact('user', 'class', 'subject'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */

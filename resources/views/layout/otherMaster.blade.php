@@ -88,15 +88,25 @@
                                                     <img src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
                                                         width="40" height="40" class="rounded-circle">
                                                 @else
-                                                    <img src="{{ asset('path_to_default_image.jpg') }}" width="40"
+                                                    <img src="{{ asset('storage/uploads/images/defualt_profile.jpg') }}" width="40"
                                                         height="40" class="rounded-circle">
                                                 @endif
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                                <a class="dropdown-item"
-                                                    href="{{ route('user-profile') }}">Profile</a>
-                                                <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
-                                            </div>
+                                            @if (auth()->user()->role_id == 2)
+                                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('user-profile') }}">Profile</a>
+                                                    <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
+                                                </div>
+                                            @elseif (auth()->user()->role_id == 3)
+                                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('teacher-user-Dashboard') }}">Dashboard</a>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('teacher-user-profile') }}">Profile</a>
+                                                    <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
+                                                </div>
+                                            @endif
                                         </li>
                                     </ul>
                                 @else

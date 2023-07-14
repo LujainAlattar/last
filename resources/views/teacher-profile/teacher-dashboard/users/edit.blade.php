@@ -1,84 +1,30 @@
-@extends('layout.otherMaster')
+@extends('layout.adminMaster')
 
 @section('title')
-    <title>profile edit</title>
+    <title>user edit</title>
 @endsection
 
 @section('header-style')
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/vendor/css/core.css') }}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ asset('admin/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ asset('admin/css/demo.css') }}" />
-
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ asset('admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
-
-    <link rel="stylesheet" href="{{ asset('admin/vendor/libs/apex-charts/apex-charts.css') }}" />
-
-    <!-- Page CSS -->
-
-    <!-- Helpers -->
-    <script src="{{ asset('admin/vendor/js/helpers.js') }}"></script>
-
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{ asset('admin/js/config.js') }}"></script>
-
-    <style>
-        .content-wrapper {
-            margin-top: -100px;
-        }
-    </style>
 @endsection
+
 
 @section('content')
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
+
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Update Image</h4>
+            <h4 class="fw-bold py-3 mb-4">update user</h4>
             <div class="row">
                 <div class="col-xxl">
                     <div class="card mb-4">
                         <br>
                         <div class="card-body">
-                            <form action="{{ route('update-teacher-user-img', $user->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('user-dashboard.update', $user->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="image">Image</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span class="input-group-text"><i class="bx bx-user"></i></span>
-                                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row justify-content-end">
-                                    <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        <a href="{{ route('teacher-user-profile') }}" class="btn btn-primary">Back</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Update Profile</h4>
-            <div class="row">
-                <div class="col-xxl">
-                    <div class="card mb-4">
-                        <br>
-                        <div class="card-body">
-                            <form action="{{ route('edit-teacher-user-profile', $user->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
+                                <input type="hidden" name="id" value="{{ $user->id }}" id="id" />
 
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
@@ -141,79 +87,11 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 form-label" for="basic-icon-default-location">Subject</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span id="basic-icon-default-subject" class="input-group-text">
-                                                <i class="fa-solid fa-book"></i>
-                                            </span>
-                                            <select id="basic-icon-default-subject" class="form-control" name="subject_id">
-                                                <option value="">Select a subject</option>
-                                                @foreach ($subjects as $subject)
-                                                    <option value="{{ $subject->id }}"
-                                                        {{ $class && $class->subject_id == $subject->id ? 'selected' : '' }}>
-                                                        {{ $subject->subject_name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        @error('subject_id')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 form-label" for="basic-icon-default-price">Price / Hrs</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span id="basic-icon-default-price" class="input-group-text">
-                                                <i class="fa-regular fa-money-bill-1"></i>
-                                            </span>
-                                            <input type="number" id="basic-icon-default-price" class="form-control price-mask" placeholder="Price"
-                                                aria-label="Price" aria-describedby="basic-icon-default-price" name="price"
-                                                value="{{ $class && $class->price ? $class->price : '' }}" />
-                                        </div>
-                                        @error('price')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-
-                                <div class="row justify-content-end">
-                                    <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        <a href="{{ route('teacher-user-profile') }}" class="btn btn-primary">Back</a>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Update Password</h4>
-            <div class="row">
-                <div class="col-xxl">
-                    <div class="card mb-4">
-                        <br>
-                        <div class="card-body">
-                            <form action="{{ route('update-teacher-user-password', $user->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-
                                 <div class="row mb-3">
                                     <label class="col-sm-2 form-label" for="basic-icon-default-pass">Password</label>
                                     <div class="col-sm-10">
                                         <div class="input-group input-group-merge" style="position: relative;">
-                                            <span id="basic-icon-default-location"
-                                                class="password-toggle input-group-text"
+                                            <span id="basic-icon-default-location" class="password-toggle input-group-text"
                                                 onclick="togglePasswordVisibility('pass')" style=" cursor: pointer;">
                                                 <i class="fa-solid fa-eye"></i>
                                             </span>
@@ -241,8 +119,8 @@
 
                                 <div class="row justify-content-end">
                                     <div class="col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                        <a href="{{ route('teacher-user-profile') }}" class="btn btn-primary">Back</a>
+                                        <button type="submit" class="btn btn-primary">Send</button>
+                                        <a href="{{ route('user-dashboard.index') }}" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>
                             </form>
@@ -274,30 +152,4 @@
     </script>
     <script src="{{ asset('auth/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('auth/js/main.js') }}"></script>
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('admin/vendor/libs/jquery/jquery.js') }}"></script>
-    <script src="{{ asset('admin/vendor/libs/popper/popper.js') }}"></script>
-    <script src="{{ asset('admin/vendor/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('admin/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-
-    <script src="{{ asset('admin/vendor/js/menu.js') }}"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-    <script src="{{ asset('admin/vendor/libs/apex-charts/apexcharts.js') }}"></script>
-
-    <!-- Main JS -->
-    <script src="{{ asset('admin/js/main.js') }}"></script>
-
-    <!-- Page JS -->
-    <script src="{{ asset('admin/js/dashboards-analytics.js') }}"></script>
-
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 @endsection

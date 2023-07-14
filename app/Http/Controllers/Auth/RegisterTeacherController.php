@@ -19,7 +19,7 @@ class RegisterTeacherController extends Controller
 
     public function register(Request $request)
     {
-        $validatedData = $request->validate([
+        $this->validate($request,[
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'pass' => 'required|min:6',
@@ -39,6 +39,6 @@ class RegisterTeacherController extends Controller
         session()->put('user_id',$user->id);
         session()->put('role','teacher');
 
-        return redirect('/Lessor')->with('success', 'Registered successfully');
+        return redirect()->route('home')->with('success', 'Registered successfully');
     }
 }
