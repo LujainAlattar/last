@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\TeacherProfileController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\TeacherDahboardController;
 
 
@@ -78,6 +79,16 @@ Route::get('/teacher-search',[TeacherController::class,'search']);
 // route to subject controller and dashboard
 Route::resource('/subject-dashboard', SubjectController::class);
 Route::get('/subject-search',[SubjectController::class,'search']);
+
+// route to admin profile
+Route::get('/admin-profile', [AdminProfileController::class, 'index'])->name('admin-profile');
+Route::get('/edit-admin-profile', [AdminProfileController::class, 'editdata'])->name('edit-admin-profile');
+Route::get('/edit-admin-profile', [AdminProfileController::class, 'editdata'])->name('edit-admin-profile');
+Route::put('/edit-admin-profile/{id}', [AdminProfileController::class, 'updatedata'])->name('edit-admin-profile');
+Route::get('/edit-admin-password', [AdminProfileController::class, 'editpassword'])->name('edit-admin-password');
+Route::put('/edit-admin-password/{id}', [AdminProfileController::class, 'updatepassword'])->name('update-admin-password');
+Route::get('/admin-profile/editimg/{id}', [AdminProfileController::class, 'editimg'])->name('edit-admin-img');
+Route::put('/admin-profile/updateimg/{id}', [AdminProfileController::class, 'updateimg'])->name('update-admin-img');
 
 
 // route to user profile

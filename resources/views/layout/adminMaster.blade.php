@@ -152,7 +152,7 @@
                                             <img src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
                                                 width="40" height="40" class="rounded-circle">
                                         @else
-                                            <img src="{{ asset('path_to_default_image.jpg') }}" width="40"
+                                            <img src="{{ asset('home/images/defualt_profile.jpg') }}" width="40"
                                                 height="40" class="rounded-circle">
                                         @endif
                                     </div>
@@ -173,8 +173,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">{{auth()->user()->name}}</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <span
+                                                        class="fw-semibold d-block">{{ auth()->user()->name }}</span>
+                                                    @if (auth()->user()->role_id == 1)
+                                                        <small class="text-muted">Admin</small>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </a>
@@ -183,10 +186,16 @@
                                         <div class="dropdown-divider"></div>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('user-profile', auth()->user()->id) }}">
+                                        @if (auth()->user()->role_id == 1)
+                                        <a class="dropdown-item"
+                                            href="{{ route('admin-profile', auth()->user()->id) }}">
                                             <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">My Profile</span>
+                                            <span class="align-middle">Profile</span>
                                         </a>
+                                        @elseif (auth()->user()->role_id == 3)
+                                            <a class="dropdown-item" href="{{ route('teacher-user-Dashboard') }}">Dashboard</a>
+                                            <a class="dropdown-item" href="{{ route('teacher-user-profile') }}">Profile</a>
+                                        @endif
                                     </li>
                                     {{-- <li>
                                         <a class="dropdown-item" href="#">
@@ -209,7 +218,6 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}">
-                                            <i class="bx bx-power-off me-2"></i>
                                             <span class="align-middle">Log Out</span>
                                         </a>
                                     </li>

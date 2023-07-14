@@ -72,30 +72,13 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Subject</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{ $class->subject->subject_name ?? '' }}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Price / Hrs</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{ $class->price ?? '' }}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info" href="{{ route('edit-user-tprofile') }}">Edit Profile</a>
+                                    <a class="btn btn-info" href="{{ route('edit-admin-tprofile') }}">Edit Profile</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <br><br><br><br><br><br>
                     {{-- <div class="row gutters-sm">
                         <div class="col-sm-6 mb-3">
                             <div class="card h-100">
