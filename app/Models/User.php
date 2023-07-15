@@ -60,17 +60,17 @@ class User extends Authenticatable
         return null;
     }
 
-    // relation with role one role to many users
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
-    // reltion with classes and teacher one to one
-    public function class()
+    // relation with classes and teacher one to one
+    public function teacherClass()
     {
         return $this->hasOne(Classes::class);
     }
+
     public function classes()
     {
         return $this->hasMany(Classes::class, 'user_id');
@@ -81,5 +81,20 @@ class User extends Authenticatable
         return $this->hasManyThrough(Booking::class, Classes::class, 'user_id', 'class_id');
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    // relationship with class (student)
+    public function class()
+    {
+        return $this->belongsTo(Classes::class);
+    }
 
 }

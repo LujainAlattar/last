@@ -32,4 +32,8 @@ class Classes extends Model
     {
         return $this->hasMany(Appointment::class, 'class_id');
     }
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

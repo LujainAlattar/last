@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'user_id',
         'class_id',
@@ -16,4 +16,10 @@ class Booking extends Model
         'end_time',
         'status',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

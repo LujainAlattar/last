@@ -78,74 +78,55 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row gutters-sm">
-                        <div class="col-sm-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h6 class="d-flex align-items-center mb-3"><i
-                                            class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                                    <small>Web Design</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>Website Markup</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%"
-                                            aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>One Page</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%"
-                                            aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>Mobile Template</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%"
-                                            aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>Backend API</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%"
-                                            aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
+
+
+
+                    <section class="book-now-section layout_padding" style="margin-top: -100px">
+                        <div class="container">
+                            <h2 class="main-heading">Book Now</h2>
+                            <div class="book-now-container">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Teacher</th>
+                                            <th>Subject</th> <!-- New column for displaying the subject name -->
+                                            {{-- <th>Action</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($userAppointments as $appointment)
+                                            <tr>
+                                                <td>{{ $appointment->start_time }}</td>
+                                                <td>{{ $appointment->end_time }}</td>
+                                                <td>
+                                                    {{ $appointment->class->teacher->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $appointment->class->subject->name }}
+                                                    <!-- Display the subject name associated with the appointment's class -->
+                                                </td>
+                                                {{-- <td>
+                                                    @if ($appointment->status == 0)
+                                                        <form id="selectForm{{ $appointment->id }}"
+                                                            action="{{ route('payment') }}" method="POST"
+                                                            onsubmit="saveAppointmentAndClassId({{ $appointment->id }}, {{ $user->class->id ?? 'null' }})">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-select">Select</button>
+                                                        </form>
+                                                    @else
+                                                        <p>This appointment is already taken.</p>
+                                                    @endif
+                                                </td> --}}
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="col-sm-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h6 class="d-flex align-items-center mb-3"><i
-                                            class="material-icons text-info mr-2">assignment</i>Project Status</h6>
-                                    <small>Web Design</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
-                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>Website Markup</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 72%"
-                                            aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>One Page</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 89%"
-                                            aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>Mobile Template</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 55%"
-                                            aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <small>Backend API</small>
-                                    <div class="progress mb-3" style="height: 5px">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 66%"
-                                            aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </section>
+
                 </div>
             </div>
         </div>
@@ -154,9 +135,7 @@
 
 
 @section('script-content')
-
-
-{{-- ajax to change the user img on click --}}
+    {{-- ajax to change the user img on click --}}
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>

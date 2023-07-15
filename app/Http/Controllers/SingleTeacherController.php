@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Classes;
+use App\Models\Payment;
+use App\Models\Rating;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -26,8 +28,9 @@ class SingleTeacherController extends Controller
             ->orderBy('start_time', 'asc') // Order by start_time in ascending order
             ->get();
 
+        $ratings = Rating::where('class_id', $classId)->get();
 
-        return view('home.teacher', compact('user', 'class', 'appointments'));
+        return view('home.teacher', compact('user', 'class', 'appointments','ratings'));
     }
 
     public function select($id)
@@ -60,21 +63,63 @@ class SingleTeacherController extends Controller
             'selectedClassId' => 'required|integer',
         ]);
 
-        // Save the payment details to your database or perform the necessary payment processing logic
-        // For example, you can create a Payment model and save the data in the database
+        // Find the class using the class ID
+        $class = Classes::find($selectedClassId);
 
-        // Clear the data from local storage after processing the payment
-        // This ensures that the user's selection won't persist if they come back to the page later
+        // Calculate the total price (amount) based on the class price
+        $amount = $class->price;
+
+        // Create a new payment record in the 'payments' table
+        $payment = new Payment();
+        $payment->book_id = $request->selectedAppointmentId;
+        $payment->price = $amount;
+        $payment->save();
+
         if (isset($_SERVER['HTTP_REFERER'])) {
             $previousUrl = $_SERVER['HTTP_REFERER'];
             if (strpos($previousUrl, route('teacher.show', $request->selectedClassId)) !== false) {
-                // If the previous page was the teacher details page, clear the local storage data
-                // This avoids re-selecting the same appointment if the user goes back and forth between pages
+
                 $request->session()->forget(['selectedAppointmentId', 'selectedClassId']);
             }
         }
 
         // Redirect the user to a success page or back to the teacher details page with a success message
-        return redirect()->route('teacher.show', ['id' => $selectedClassId])->with('success', 'Payment successful!');
+        return redirect()->route('teacher.show', ['id' => $request->selectedClassId])->with('success', 'Payment successful!');
     }
+
+
+
+    
+
+    public function reviewstore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'rating' => 'required|integer',
+            'comment' => 'required|string',
+            'class_id' => 'required|exists:classes,id',
+        ]);
+
+        $review = new Rating();
+        $review->class_id = $request->class_id;
+        $review->name = $request->name;
+        $review->email = $request->email;
+        $review->feedback = $request->comment;
+        $review->star_rating = $request->rating;
+
+        // Check if the user is authenticated
+        if (auth()->check()) {
+            // If authenticated, use the user's image
+            $review->user_image = auth()->user()->img;
+        } else {
+            // If guest, use the default profile image
+            $review->user_image = 'defualt_profile.jpg'; // Change 'default_profile.jpg' to the correct default image filename
+        }
+
+        $review->save();
+
+        return redirect()->back()->with('flash_msg_success', 'Your review has been submitted Successfully.');
+    }
+
 }

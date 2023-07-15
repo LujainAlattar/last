@@ -14,6 +14,7 @@
                         <h2 class="main-heading">Payment Details</h2>
                         <form action="{{ route('process.payment') }}" method="POST">
                             @csrf
+
                             <div class="form-group">
                                 <label for="name">Name on Card</label>
                                 <input type="text" id="name" name="name" class="form-control" required>
@@ -40,7 +41,8 @@
                             <input type="hidden" id="selectedAppointmentId" name="selectedAppointmentId">
                             <input type="hidden" id="selectedClassId" name="selectedClassId">
                             <button type="submit" class="btn btn-primary">Pay Now</button>
-                            
+                                <br><br><br><br><br>
+
                         </form>
                     </div>
                 </div>
@@ -51,7 +53,7 @@
 
     <script>
         // Retrieve data from local storage and set it in the hidden fields before form submission
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const selectedAppointmentId = localStorage.getItem('selectedAppointmentId');
             const selectedClassId = localStorage.getItem('selectedClassId');
             const amount = localStorage.getItem('amount');
@@ -63,4 +65,4 @@
             }
         });
     </script>
-    @endsection
+@endsection

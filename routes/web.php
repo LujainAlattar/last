@@ -45,6 +45,7 @@ Route::post('/process-payment', [SingleTeacherController::class, 'processPayment
 Route::match(['get', 'post'], '/payment', function () {
     return view('home.payment');
 })->name('payment');
+Route::post('/review.store', [SingleTeacherController::class, 'reviewstore'])->name('review.store');
 
 
 // Route for the 'contact' page

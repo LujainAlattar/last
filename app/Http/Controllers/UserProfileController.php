@@ -15,9 +15,18 @@ class UserProfileController extends Controller
 {
     public function index()
     {
-        $userId = session('user_id');
-        $user = User::find($userId);
-        return view('user-profile.profile', compact('user'));
+        $user = User::with('payments', 'bookings.appointments', 'class.teacher')->find(auth()->id());
+
+        // Get all the data you need
+        $userPayments = $user->payments;
+        $userBookings = $user->bookings;
+        $userAppointments = $user->appointments;
+        $userClass = $user->class;
+        $teacherUser = $userClass->teacher; // Retrieve the teacher's user associated with the class
+
+
+        // Pass the data to the view
+        return view('user-profile.profile', compact('user', 'userPayments', 'userBookings', 'userAppointments', 'userClass', 'teacherUser'));
     }
 
     public function editdata()
@@ -64,6 +73,7 @@ class UserProfileController extends Controller
     public function editimg(string $id)
     {
         $user = User::find($id);
+
         return view('user-profile.edit', compact('user'));
     }
 
