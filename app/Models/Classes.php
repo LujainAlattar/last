@@ -28,4 +28,8 @@ class Classes extends Model
         return $this->belongsTo(Subject::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'class_id');
+    }
 }

@@ -71,4 +71,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(Classes::class);
     }
+    public function classes()
+    {
+        return $this->hasMany(Classes::class, 'user_id');
+    }
+
+    public function appointments()
+    {
+        return $this->hasManyThrough(Booking::class, Classes::class, 'user_id', 'class_id');
+    }
+
+
 }

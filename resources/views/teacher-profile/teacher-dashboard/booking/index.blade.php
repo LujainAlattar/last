@@ -1,7 +1,7 @@
 @extends('layout.adminMaster')
 
 @section('title')
-    <title>users</title>
+    <title>appointments</title>
 @endsection
 
 @section('header-style')
@@ -54,13 +54,13 @@
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="navbar-nav align-items-center">
+            {{-- <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center search-input-container">
                     <i class="bx bx-search fs-4 lh-0"></i>
                     <input type="text" class="search-input" placeholder="Search..." aria-label="Search..." name="search"
                         id="search" />
                 </div>
-            </div>
+            </div> --}}
 
 
             <!-- Striped Rows -->
@@ -70,37 +70,60 @@
                 <div class="table-responsive text-nowrap">
                     <table class="table table-striped">
                         <div class="container-table-header">
-                            <h4 class="fw-bold py-3 mb-4">Teachers Table</h4>
-                            <a href="{{ route('teacher-dashboard.create') }}" class="btn btn-primary">Create Teacher</a>
+                            <h4 class="fw-bold py-3 mb-4">appointments Table</h4>
+                            <div class="navbar-nav align-items-center">
+                                <div class="nav-item d-flex align-items-center">
+                                    {{-- <label for="filter" class="form-label"><h6>Filter:</h6></label> --}}
+                                    <select class="form-select" id="filter">
+                                        <option value="">All</option>
+                                        <option value="1">Available</option>
+                                        <option value="0">Not Available</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <a href="{{ route('teacher-createappointment-dashboard') }}" class="btn btn-primary">Create
+                                appointment</a>
                         </div>
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name</th>
-                                <th>Email</th>
+                                <th>start</th>
+                                <th>end</th>
+                                <th>availablity</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0" id="alldata">
-                            @foreach ($users as $user)
+                            @foreach ($appointments as $appointment)
                                 <tr>
-                                    <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $appointment->index + 1 }}</td>
+                                    <td>{{ $appointment->start_time }}</td>
+                                    <td>{{ $appointment->end_time }}</td>
                                     <td>
-                                        <a href="{{ route('teacher-dashboard.show', $user->id) }}" class="btn"
-                                            style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
-                                                class="fa fa-eye"></i></a>
-                                        <a href="{{ route('teacher-dashboard.edit', $user->id) }}" class="btn"
+                                        <span class="{{ $appointment->status == 0 ? 'text-success' : 'text-danger' }}">
+                                            {{ $appointment->status == 1 ? 'Not Available' : ' Available' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if ($appointment->status == 1)
+                                            <a href="{{ route('teacher-showuserappointment-dashboard.show', $appointment->id) }}"
+                                                class="btn"
+                                                style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        @endif
+
+                                        <a href="{{ route('teacher-updateappointment-dashboard', $appointment->id) }}"
+                                            class="btn"
                                             style="border: none; color: rgba(53, 211, 21, 0.814); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
                                                 class="fa fa-edit"></i></a>
-                                        <form action="{{ route('teacher-dashboard.destroy', $user->id) }}" method="POST"
-                                            style="display: inline">
+                                        <form action="{{ route('teacher-deleteappointment-dashboard', $appointment->id) }}"
+                                            method="POST" style="display: inline">
                                             @csrf
                                             @method('DELETE')
                                             <a href="javascript:void(0);"
                                                 onclick="event.preventDefault();
-                                                if (confirm('Are you sure you want to delete this user?')) {
+                                                if (confirm('Are you sure you want to delete this appointment?')) {
                                                     $(this).closest('form').submit();
                                                 }"
                                                 class="btn"
@@ -113,7 +136,7 @@
                             @endforeach
                         </tbody>
                         {{-- for the search --}}
-                        <tbody id="Content" class="searchdata" ></tbody>
+                        <tbody id="Content" class="searchdata"></tbody>
                     </table>
                 </div>
             </div>
@@ -126,10 +149,10 @@
 
 @section('script-content')
     <script type="text/javascript">
-        $('#search').on('keyup', function(){
+        $('#search').on('keyup', function() {
             $value = $(this).val();
 
-            if($value){
+            if ($value) {
                 console.log('Search value present');
                 $('#alldata').hide();
                 $('#Content').show();
@@ -140,15 +163,39 @@
             }
 
             $.ajax({
-                type:'get',
-                url:'{{URL::to('teacher-search')}}',
-                data:{'search':$value},
-                success:function(data){
+                type: 'get',
+                url: '{{ URL::to('teacher-search') }}',
+                data: {
+                    'search': $value
+                },
+                success: function(data) {
                     console.log("data");
                     $('#Content').html(data);
                 }
             });
 
         })
+    </script>
+    <script>
+        $('#filter').on('change', function() {
+            const filterValue = $(this).val();
+            filterTable(filterValue);
+        });
+
+        function filterTable(filterValue) {
+            const rows = $('#alldata').find('tr');
+
+            rows.each(function() {
+                const availabilityCell = $(this).find('td:nth-child(4)');
+                const isAvailable = availabilityCell.find('span').hasClass('text-success');
+
+                if (filterValue === '' || (filterValue === '1' && isAvailable) || (filterValue === '0' && !
+                        isAvailable)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
     </script>
 @endsection

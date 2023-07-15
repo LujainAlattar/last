@@ -79,47 +79,77 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item {{ request()->routeIs('admin') ? 'active' : '' }}">
-                        <a href="{{ route('admin') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
-                        </a>
-                    </li>
+                    @if (auth()->user()->role_id == 1)
+                        <li class="menu-item {{ request()->routeIs('admin') ? 'active' : '' }}">
+                            <a href="{{ route('admin') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <div data-i18n="Analytics">Dashboard</div>
+                            </a>
+                        </li>
 
-                    <li class="menu-item {{ request()->routeIs('user-dashboard.index') ? 'active' : '' }}">
-                        <a href="{{ route('user-dashboard.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons fa-solid fa-users"></i>
-                            <div data-i18n="Analytics">Users</div>
-                        </a>
-                    </li>
+                        <li class="menu-item {{ request()->routeIs('user-dashboard.index') ? 'active' : '' }}">
+                            <a href="{{ route('user-dashboard.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons fa-solid fa-users"></i>
+                                <div data-i18n="Analytics">Users</div>
+                            </a>
+                        </li>
 
-                    <li class="menu-item {{ request()->routeIs('teacher-dashboard.index') ? 'active' : '' }}">
-                        <a href="{{ route('teacher-dashboard.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons fa-solid fa-user-tie"></i>
-                            <div data-i18n="Analytics">Teachers</div>
-                        </a>
-                    </li>
+                        <li class="menu-item {{ request()->routeIs('teacher-dashboard.index') ? 'active' : '' }}">
+                            <a href="{{ route('teacher-dashboard.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons fa-solid fa-user-tie"></i>
+                                <div data-i18n="Analytics">Teachers</div>
+                            </a>
+                        </li>
 
-                    <li class="menu-item {{ request()->routeIs('subject-dashboard.index') ? 'active' : '' }}">
-                        <a href="{{ route('subject-dashboard.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons fa-solid fa-book"></i>
-                            <div data-i18n="Analytics">Subjects</div>
-                        </a>
-                    </li>
+                        <li class="menu-item {{ request()->routeIs('subject-dashboard.index') ? 'active' : '' }}">
+                            <a href="{{ route('subject-dashboard.index') }}" class="menu-link">
+                                <i class="menu-icon tf-icons fa-solid fa-book"></i>
+                                <div data-i18n="Analytics">Subjects</div>
+                            </a>
+                        </li>
 
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons fa-solid fa-credit-card"></i>
-                            <div data-i18n="Analytics">Booking & Payment</div>
-                        </a>
-                    </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <i class="menu-icon tf-icons fa-solid fa-credit-card"></i>
+                                <div data-i18n="Analytics">Booking & Payment</div>
+                            </a>
+                        </li>
 
-                    <li class="menu-item">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons fa-regular fa-star-half-stroke"></i>
-                            <div data-i18n="Analytics">Reviews</div>
-                        </a>
-                    </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <i class="menu-icon tf-icons fa-regular fa-star-half-stroke"></i>
+                                <div data-i18n="Analytics">Reviews</div>
+                            </a>
+                        </li>
+                    @elseif (auth()->user()->role_id == 3)
+                        <li class="menu-item {{ request()->routeIs('teacher-user-Dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('teacher-user-Dashboard') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <div data-i18n="Analytics">Dashboard</div>
+                            </a>
+                        </li>
+
+                        <li class="menu-item {{ request()->routeIs('teacher-student-dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('teacher-student-dashboard') }}" class="menu-link">
+                                <i class="menu-icon tf-icons fa-solid fa-users"></i>
+                                <div data-i18n="Analytics">Students</div>
+                            </a>
+                        </li>
+
+                        <li class="menu-item {{ request()->routeIs('teacher-showappointment-dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('teacher-showappointment-dashboard') }}" class="menu-link">
+                                <i class="menu-icon tf-icons fa-solid fa-credit-card"></i>
+                                <div data-i18n="Analytics">Booking & Payment</div>
+                            </a>
+                        </li>
+
+                        <li class="menu-item {{ request()->routeIs('teacher-showreviews-dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('teacher-showreviews-dashboard') }}" class="menu-link">
+                                <i class="menu-icon tf-icons fa-regular fa-star-half-stroke"></i>
+                                <div data-i18n="Analytics">Reviews</div>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -187,14 +217,16 @@
                                     </li>
                                     <li>
                                         @if (auth()->user()->role_id == 1)
-                                        <a class="dropdown-item"
-                                            href="{{ route('admin-profile', auth()->user()->id) }}">
-                                            <i class="bx bx-user me-2"></i>
-                                            <span class="align-middle">Profile</span>
-                                        </a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('admin-profile', auth()->user()->id) }}">
+                                                <i class="bx bx-user me-2"></i>
+                                                <span class="align-middle">Profile</span>
+                                            </a>
                                         @elseif (auth()->user()->role_id == 3)
-                                            <a class="dropdown-item" href="{{ route('teacher-user-Dashboard') }}">Dashboard</a>
-                                            <a class="dropdown-item" href="{{ route('teacher-user-profile') }}">Profile</a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('teacher-user-Dashboard') }}">Dashboard</a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('teacher-user-profile') }}">Profile</a>
                                         @endif
                                     </li>
                                     {{-- <li>

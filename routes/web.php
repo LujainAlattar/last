@@ -14,6 +14,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\TeacherProfileController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\TeacherDahboardController;
+use App\Http\Controllers\SingleTeacherController;
 
 
 
@@ -38,7 +39,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::view('/about', 'home.about')->name('about');
 
 // Route for the 'teacher' page
-Route::view('/teacher', 'home.teacher')->name('teacher');
+Route::get('/teacher/{id}', [SingleTeacherController::class, 'index'])->name('teacher.show');
+Route::post('/appointments/select/{id}', [SingleTeacherController::class, 'select'])->name('appointments.select');
+Route::post('/process-payment', [SingleTeacherController::class, 'processPayment'])->name('process.payment');
+Route::match(['get', 'post'], '/payment', function () {
+    return view('home.payment');
+})->name('payment');
+
 
 // Route for the 'contact' page
 Route::view('/contact', 'home.contact')->name('contact');
@@ -68,17 +75,17 @@ Route::get('/admins', function () {
 
 // route to user controller and dashboard
 Route::resource('/user-dashboard', UserController::class);
-Route::get('/user-search',[UserController::class,'search']);
+Route::get('/user-search', [UserController::class, 'search']);
 
 
 // route to teacher controller and dashboard
 Route::resource('/teacher-dashboard', TeacherController::class);
-Route::get('/teacher-search',[TeacherController::class,'search']);
+Route::get('/teacher-search', [TeacherController::class, 'search']);
 
 
 // route to subject controller and dashboard
 Route::resource('/subject-dashboard', SubjectController::class);
-Route::get('/subject-search',[SubjectController::class,'search']);
+Route::get('/subject-search', [SubjectController::class, 'search']);
 
 // route to admin profile
 Route::get('/admin-profile', [AdminProfileController::class, 'index'])->name('admin-profile');
@@ -117,3 +124,15 @@ Route::put('/teacher-user-profile/updateimg/{id}', [TeacherProfileController::cl
 
 //route for teacher dashboard
 Route::get('/teacher-user-dashboard', [TeacherDahboardController::class, 'index'])->name('teacher-user-Dashboard');
+Route::get('/teacher-student-dashboard', [TeacherDahboardController::class, 'showstudent'])->name('teacher-student-dashboard');
+Route::get('/teacher-studentdata-dashboard', [TeacherDahboardController::class, 'showstudentdata'])->name('teacher-studentdata-dashboard');
+Route::get('/teacher-assignment-dashboard', [TeacherDahboardController::class, 'assignments'])->name('teacher-assignment-dashboard');
+Route::get('/teacher-notes-dashboard', [TeacherDahboardController::class, 'notes'])->name('teacher-notes-dashboard');
+Route::put('/teacher-appointment-dashboard', [TeacherDahboardController::class, 'appointment'])->name('teacher-appointment-dashboard');
+Route::get('/teacher-showappointment-dashboard', [TeacherDahboardController::class, 'showappointment'])->name('teacher-showappointment-dashboard');
+Route::get('/teacher-createappointment-dashboard', [TeacherDahboardController::class, 'createappointment'])->name('teacher-createappointment-dashboard');
+Route::get('/teacher-showreviews-dashboard', [TeacherDahboardController::class, 'showreviews'])->name('teacher-showreviews-dashboard');
+Route::put('/teacher-editappointment-dashboard/{id}', [TeacherDahboardController::class, 'editappointment'])->name('teacher-editappointment-dashboard');
+Route::get('/teacher-updateappointment-dashboard/{id}', [TeacherDahboardController::class, 'updateappointment'])->name('teacher-updateappointment-dashboard');
+Route::delete('/teacher-deleteappointment-dashboard/{id}', [TeacherDahboardController::class, 'deleteappointment'])->name('teacher-deleteappointment-dashboard');
+Route::get('/teacher-showuserappointment-dashboard/{id}', [TeacherDahboardController::class, 'showuserappointment'])->name('teacher-showuserappointment-dashboard');

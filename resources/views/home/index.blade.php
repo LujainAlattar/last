@@ -72,7 +72,7 @@
                 <div class="card-deck">
                     {{-- cards with pagination --}}
                     @foreach ($users as $user)
-                        <div class="w3-third card_teacher ml-4">
+                        <div class="w3-third card_teacher ml-4 mb-4">
                             <div class="w3-white w3-text-grey w3-card-4 card_teacher_body">
                                 <div class="w3-display-container">
                                     <img class="card-img-top" src="{{ asset('storage/uploads/images/' . $user->img) }}"
@@ -103,7 +103,7 @@
 
                                 </div>
                                 <div class="d-flex justify-content-center mb-3">
-                                    <a href="{{ route('teacher') }}" class="call_to-btn">
+                                    <a href="{{ route('teacher.show', $user->id) }}" class="call_to-btn">
                                         <span>Read More</span>
                                         <img src="{{ asset('home/images/right-arrow.png') }}" alt="">
                                     </a>

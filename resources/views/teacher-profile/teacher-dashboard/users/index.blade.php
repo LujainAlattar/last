@@ -70,50 +70,40 @@
                 <div class="table-responsive text-nowrap">
                     <table class="table table-striped">
                         <div class="container-table-header">
-                            <h4 class="fw-bold py-3 mb-4">Users Table</h4>
-                            <a href="{{ route('user-dashboard.create') }}" class="btn btn-primary">Create User</a>
+                            <h4 class="fw-bold py-3 mb-4">Students Table</h4>
                         </div>
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Location</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0" id="alldata">
-                            @foreach ($users as $user)
+                            @foreach ($students as $student)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $student->name }}</td>
+                                    <td>{{ $student->email }}</td>
+                                    <td>{{ $student->location }}</td>
                                     <td>
-                                        <a href="{{ route('user-dashboard.show', $user->id) }}" class="btn"
+                                        <a href="{{ route('teacher-studentdata-dashboard', $student->id) }}" class="btn"
                                             style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
                                                 class="fa fa-eye"></i></a>
-                                        <a href="{{ route('user-dashboard.edit', $user->id) }}" class="btn"
+                                        <a href="{{ route('teacher-assignment-dashboard', $student->id) }}" class="btn"
                                             style="border: none; color: rgba(53, 211, 21, 0.814); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
-                                                class="fa fa-edit"></i></a>
-                                        <form action="{{ route('user-dashboard.destroy', $user->id) }}" method="POST"
-                                            style="display: inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <a href="javascript:void(0);"
-                                                onclick="event.preventDefault();
-                                                if (confirm('Are you sure you want to delete this user?')) {
-                                                    $(this).closest('form').submit();
-                                                }"
-                                                class="btn"
-                                                style="border: none; color: rgba(246, 16, 16, 0.7); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </form>
+                                                class="fa-solid fa-pen-to-square"></i></a>
+                                        <a href="{{ route('teacher-notes-dashboard', $student->id) }}" class="btn"
+                                            style="border: none; color: rgba(53, 211, 21, 0.814); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
+                                                class="fa-solid fa-comments"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                         {{-- for the search --}}
-                        <tbody id="Content" class="searchdata" ></tbody>
+                        <tbody id="Content" class="searchdata"></tbody>
                     </table>
                 </div>
             </div>
@@ -126,10 +116,10 @@
 
 @section('script-content')
     <script type="text/javascript">
-        $('#search').on('keyup', function(){
+        $('#search').on('keyup', function() {
             $value = $(this).val();
 
-            if($value){
+            if ($value) {
                 console.log('Search value present');
                 $('#alldata').hide();
                 $('#Content').show();
@@ -140,10 +130,12 @@
             }
 
             $.ajax({
-                type:'get',
-                url:'{{URL::to('user-search')}}',
-                data:{'search':$value},
-                success:function(data){
+                type: 'get',
+                url: '{{ URL::to('user-search') }}',
+                data: {
+                    'search': $value
+                },
+                success: function(data) {
                     console.log("data");
                     $('#Content').html(data);
                 }

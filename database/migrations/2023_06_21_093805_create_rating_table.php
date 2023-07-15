@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->integer('star_rating');
             $table->string('user_image')->nullable();
+            $table->unsignedBigInteger('class_id');
+            $table->foreign('class_id')->references('id')->on('classes'); //for the class
             $table->timestamps();
         });
     }
