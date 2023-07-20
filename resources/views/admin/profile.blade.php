@@ -73,7 +73,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info" href="{{ route('edit-admin-tprofile') }}">Edit Profile</a>
+                                    <a class="btn btn-info" href="{{ route('edit-admin-profile', ['id' => $user->id]) }}">Edit Profile</a>
                                 </div>
                             </div>
                         </div>

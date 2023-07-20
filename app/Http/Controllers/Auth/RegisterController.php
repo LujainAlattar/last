@@ -37,6 +37,7 @@ class RegisterController extends Controller
         Auth::login($user);
         session()->put('user_id', $user->id);
         session()->put('role', 'user');
+        Session()->put('role_id', '2');
 
 
         $message = 'Registered successfully!';

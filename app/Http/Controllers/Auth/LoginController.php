@@ -27,16 +27,19 @@ class LoginController extends Controller
             if ($user->role_id == 1) {
                 // Redirect to the dashboard for users with role_id = 1
                 Session::put('role', 'admin');
-                return redirect()->route('admins');
+                Session::put('role_id', '1');
+                return redirect()->route('admin');
             } elseif ($user->role_id == 2) {
                 // Redirect to the hello page for users with role_id = 2
                 Session::put('user_id', $user->id);
+                Session::put('role_id', '2');
                 Session::put('role', 'user');
                 return redirect()->route('home');
             } elseif ($user->role_id == 3) {
                 // Handle other role IDs as needed
                 Session::put('user_id', $user->id);
                 Session::put('role', 'teacher');
+                Session::put('role_id', '3');
                 return redirect()->route('home');
             }
         }

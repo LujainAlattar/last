@@ -15,16 +15,16 @@ class AdminProfileController extends Controller
 {
     public function index()
     {
-        $userId = session('user_id');
+        $userId = auth()->id();
         $user = User::find($userId);
-        return view('user-profile.profile', compact('user'));
+        return view('admin.profile', compact('user'));
     }
 
     public function editdata()
     {
-        $userId = session('user_id');
+        $userId = auth()->id();
         $user = User::find($userId);
-        return view('user-profile.edit', compact('user'));
+        return view('admin.profile.edit', compact('user'));
     }
 
     public function updatedata(Request $request, string $id)
@@ -37,14 +37,14 @@ class AdminProfileController extends Controller
         $user->location = $request->input('location');
         $user->age = now()->diffInYears($request->input('birthday'));
         $user->save();
-        return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');
+        return redirect()->route('admin-profile')->with('flash_message', 'User updated successfully.');
     }
 
     public function editpassword()
     {
         $userId = session('user_id');
         $user = User::find($userId);
-        return view('user-profile.edit', compact('user'));
+        return view('admin.edit', compact('user'));
     }
 
     public function updatepassword(Request $request, string $id)
@@ -57,14 +57,14 @@ class AdminProfileController extends Controller
         $user = User::find($id);
         $user->password = Hash::make($request->input('password'));
         $user->update();
-        return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');
+        return redirect()->route('admin-profile')->with('flash_message', 'User updated successfully.');
     }
 
 
     public function editimg(string $id)
     {
         $user = User::find($id);
-        return view('user-profile.edit', compact('user'));
+        return view('admin.edit', compact('user'));
     }
 
     public function updateimg(Request $request, string $id)
@@ -84,6 +84,6 @@ class AdminProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');
+        return redirect()->route('admin-profile')->with('flash_message', 'User updated successfully.');
     }
 }
