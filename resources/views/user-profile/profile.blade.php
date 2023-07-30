@@ -19,9 +19,9 @@
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
                                 <div class="profile-image-container">
-                                    <img id="profile-image"
-                                        src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}" alt="Admin"
-                                        class="rounded-circle" width="150">
+                                    <img id="profile-image" class="rounded-circle" width="150"
+                                        src="{{ auth()->user()->img ? asset('storage/uploads/images/' . auth()->user()->img) : asset('home/images/default_profile.jpg') }}"
+                                        alt="Admin">
                                 </div>
                                 <div class="mt-3">
                                     <h4>{{ $user->name }}</h4>

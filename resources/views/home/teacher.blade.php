@@ -272,7 +272,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="teacher-img-container d-flex justify-content-center align-items-center">
-                        <img src="{{ asset('storage/uploads/images/' . $user->img) }}" alt="Teacher Image">
+                        <img src="@if($user->img){{ asset('storage/uploads/images/' . $user->img) }}@else{{ asset('home/images/defualt_profile.jpg') }}@endif" alt="Teacher Image">
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -355,7 +355,9 @@
             <div class="review-item">
                 @foreach ($ratings as $rating)
                     <div class="ri-pic">
-                        <img style="border-radius: 40px" src="{{ asset('storage/uploads/images/' . $rating->user_image) }}" alt="User Image">
+                        <img style="border-radius: 40px"
+                        src="@if($rating->user_image){{ asset('storage/uploads/images/' . $rating->user_image) }}@else{{ asset('home/images/defualt_profile.jpg') }}@endif"
+                        alt="User Image">
                     </div>
                     <div class="ri-text">
                         <span>{{ $rating->created_at->format('M d, Y') }}</span>

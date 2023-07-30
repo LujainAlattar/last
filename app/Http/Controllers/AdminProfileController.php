@@ -24,7 +24,7 @@ class AdminProfileController extends Controller
     {
         $userId = auth()->id();
         $user = User::find($userId);
-        return view('admin.profile.edit', compact('user'));
+        return view('admin.edit', compact('user'));
     }
 
     public function updatedata(Request $request, string $id)

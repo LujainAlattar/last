@@ -90,7 +90,7 @@ Route::get('/subject-search', [SubjectController::class, 'search']);
 
 // route to admin profile
 Route::get('/admin-profile', [AdminProfileController::class, 'index'])->name('admin-profile');
-Route::get('/edit-admin-profile', [AdminProfileController::class, 'editdata'])->name('edit-admin-profile');
+Route::get('/edit-admin', [AdminProfileController::class, 'editdata'])->name('edit-admin');
 Route::get('/edit-admin-profile', [AdminProfileController::class, 'editdata'])->name('edit-admin-profile');
 Route::put('/edit-admin-profile/{id}', [AdminProfileController::class, 'updatedata'])->name('edit-admin-profile');
 Route::get('/edit-admin-password', [AdminProfileController::class, 'editpassword'])->name('edit-admin-password');

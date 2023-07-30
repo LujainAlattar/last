@@ -83,7 +83,7 @@
                                         <img src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
                                             width="40" height="40" class="rounded-circle">
                                         @else
-                                        <img src="{{ asset('storage/uploads/images/defualt_profile.jpg') }}" width="40"
+                                        <img src="{{ asset('home/images/defualt_profile.jpg') }}" width="40"
                                             height="40" class="rounded-circle">
                                         @endif
                                     </a>

@@ -45,7 +45,7 @@
 
                                 <input type="hidden" name="id" value="{{ $user->id }}" id="id" />
                                 <div class="user-img-in">
-                                    <img src="{{ asset('storage/uploads/images/' . $user->img) }}" alt="User Image">
+                                    <img src="{{ $user->img ? asset('storage/uploads/images/' . $user->img) : asset('home/images/default_profile.jpg') }}" alt="User Image">
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>

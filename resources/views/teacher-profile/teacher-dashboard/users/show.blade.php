@@ -42,7 +42,7 @@
                             <form action="" method="POST">
                                 <input type="hidden" name="id" value="{{ $student->id }}" id="id" />
                                 <div class="student-img-in">
-                                    <img src="{{ asset('storage/uploads/images/' . $student->img) }}" alt="Student Image">
+                                    <img src="{{ $student->img ? asset('storage/uploads/images/' . $student->img) : asset('home/images/default_profile.jpg') }}" alt="Student Image">
                                 </div>
                                 <div class="row mb-3">
                                     <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
