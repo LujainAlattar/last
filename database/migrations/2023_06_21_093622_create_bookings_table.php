@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('class_id');
             $table->foreign('class_id')->references('id')->on('classes');
+            $table->unsignedBigInteger('user_id')->nullable();  //student id
+            $table->foreign('user_id')->references('id')->on('users');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->integer('status');

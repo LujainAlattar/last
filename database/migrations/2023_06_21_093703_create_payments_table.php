@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('book_id');
-            $table->foreign('book_id')->references('id')->on('booking');
+            $table->foreign('book_id')->references('id')->on('bookings');
             $table->float('price', 8, 2); // Using 'float' type with 8 digits in total, and 2 digits after the decimal point
             $table->timestamps();
         });

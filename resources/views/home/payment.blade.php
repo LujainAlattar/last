@@ -26,11 +26,11 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="expiryDate">Expiry Date</label>
-                                    <input type="text" id="expiryDate" name="expiryDate" class="form-control" required>
+                                    <input type="month" id="expiryDate" name="expiryDate" class="form-control" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" class="form-control" required>
+                                    <input type="text" id="cvv" name="cvv" class="form-control" pattern="\d{3}" maxlength="3" required>
                                 </div>
                             </div>
                             {{-- <div class="form-group">

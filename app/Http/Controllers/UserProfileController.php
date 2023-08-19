@@ -86,12 +86,16 @@ class UserProfileController extends Controller
         $user = User::find($id);
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/uploads/images', $imageName);
-            $user->img = $imageName;
+            $destination_path = 'uploads/images' . $user->user_img;
+            if (File::exists($destination_path)) {
+                File::delete($destination_path);
+            }
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('storage/uploads/images', $filename);
+            $user->img = $filename;
         }
-
         $user->save();
 
         return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');

@@ -67,7 +67,7 @@
             <div class="card">
                 {{-- <h5 class="card-header">users rows</h5> --}}
                 <br>
-                <div class="table-responsive text-nowrap">
+                <div class="table text-nowrap">
                     <table class="table table-striped">
                         <div class="container-table-header">
                             <h4 class="fw-bold py-3 mb-4">Users Table</h4>
@@ -118,9 +118,9 @@
                 </div>
             </div>
             <!--/ Striped Rows -->
-
         </div>
     </div>
+
 @endsection
 
 

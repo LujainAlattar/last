@@ -49,12 +49,7 @@
             </div>
             <div class="hero_img-container">
                 <div>
-                    <img id="profile-image" class="img-fluid"
-                        @if (auth()->user()->img) src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
-                    alt="Admin"
-                @else
-                    src="{{ asset('home/images/defualt_profile.jpg') }}"
-                    alt="Default Admin" @endif>
+                    <img src="{{asset('home/images/hero.png')}}" alt="" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -81,10 +76,10 @@
                             <div class="w3-white w3-text-grey w3-card-4 card_teacher_body">
                                 <div class="w3-display-container">
                                     <img class="card-img-top"
-                                    @if ($user->img) src="{{ asset('storage/uploads/images/' . $user->img) }}"
+                                        @if ($user->img) src="{{ asset('storage/uploads/images/' . $user->img) }}"
                                     @else
-                                    src="{{ asset('home/images/defualt_profile.jpg') }}"   @endif
-                                    alt="Card image cap">
+                                    src="{{ asset('home/images/defualt_profile.jpg') }}" @endif
+                                        alt="Card image cap">
                                     <div class="w3-display-bottomleft w3-container w3-text-black"
                                         style="display: flex; justify-content:space-between; align-items:center;">
                                         <h2>{{ $user->name }}</h2>
