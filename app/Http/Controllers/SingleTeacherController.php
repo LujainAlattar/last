@@ -10,6 +10,9 @@ use App\Models\Payment;
 use App\Models\Rating;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Carbon\Carbon;
+
 
 class SingleTeacherController extends Controller
 {
@@ -30,7 +33,7 @@ class SingleTeacherController extends Controller
 
         $ratings = Rating::where('class_id', $classId)->get();
 
-        return view('home.teacher', compact('user', 'class', 'appointments','ratings'));
+        return view('home.teacher', compact('user', 'class', 'appointments', 'ratings'));
     }
 
     public function select($id)
@@ -56,7 +59,22 @@ class SingleTeacherController extends Controller
         $request->validate([
             'name' => 'required|string',
             'cardNumber' => 'required|string',
-            'expiryDate' => 'required|string',
+            'expiryDate' => [
+                'required',
+                'string',
+                Rule::exists('card_expiry_dates', 'date')->where(function ($query) {
+                    // Check if expiry date is in the future
+                    return $query->where('date', '>', now());
+                }),
+                function ($attribute, $value, $fail) {
+                    // Custom validation: Check if expiry date is in or after the current month
+                    $expiryDate = Carbon::createFromFormat('Y-m', $value);
+                    $currentMonth = Carbon::now()->startOfMonth();
+                    if ($expiryDate->lessThan($currentMonth)) {
+                        $fail('The expiry date must be in or after the current month.');
+                    }
+                },
+            ],
             'cvv' => 'required|string',
             'amount' => 'required|numeric',
             'selectedAppointmentId' => 'required|integer',
@@ -89,7 +107,7 @@ class SingleTeacherController extends Controller
 
 
 
-    
+
 
     public function reviewstore(Request $request)
     {
@@ -121,5 +139,4 @@ class SingleTeacherController extends Controller
 
         return redirect()->back()->with('flash_msg_success', 'Your review has been submitted Successfully.');
     }
-
 }

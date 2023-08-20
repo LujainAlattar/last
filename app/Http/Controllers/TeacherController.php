@@ -18,7 +18,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $users = User::where('role_id', 3)->get();
+        $users = User::where('role_id', 3)->paginate(10);
         return view('admin.teachers.index', compact('users'));
     }
 
