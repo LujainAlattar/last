@@ -31,7 +31,9 @@ class SingleTeacherController extends Controller
             ->orderBy('start_time', 'asc') // Order by start_time in ascending order
             ->get();
 
-        $ratings = Rating::where('class_id', $classId)->get();
+        $ratings = Rating::where('class_id', $classId)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('home.teacher', compact('user', 'class', 'appointments', 'ratings'));
     }
@@ -83,9 +85,9 @@ class SingleTeacherController extends Controller
 
         // Find the class using the class ID
         $class = Classes::find($selectedClassId);
-
+        $booking = Booking::find($request->selectedAppointmentId);
         // Calculate the total price (amount) based on the class price
-        $amount = $class->price;
+        $amount = $class->price * $booking->hours;
 
         // Create a new payment record in the 'payments' table
         $payment = new Payment();

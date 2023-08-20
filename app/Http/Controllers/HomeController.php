@@ -10,10 +10,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $users = User::where('role_id', 3)->get();
-        $classes = Classes::with('subject')->whereIn('user_id', $users->pluck('id'))->get();
+        $users = User::where('role_id', 3)
+            ->with(['classes.subject']) // Eager load classes and subject relationships
+            ->paginate(9);
 
-        return view('home.index', compact('users', 'classes'));
+        return view('home.index', compact('users'));
     }
-
 }

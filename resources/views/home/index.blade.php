@@ -22,6 +22,25 @@
             width: 330px;
             height: 600px;
         }
+
+        .numeric-pagination-container {
+            margin-top: 20px;
+        }
+
+        .numeric-pagination-link {
+            display: inline-block;
+            font-size: 14px;
+            padding: 4px 8px;
+            margin: 0 2px;
+            color: #082465;
+            border: 1px solid #082465;
+            text-decoration: none;
+        }
+
+        .numeric-pagination-link.active {
+            background-color: #082465;
+            color: white;
+        }
     </style>
 @endsection
 
@@ -49,7 +68,7 @@
             </div>
             <div class="hero_img-container">
                 <div>
-                    <img src="{{asset('home/images/hero.png')}}" alt="" class="img-fluid">
+                    <img src="{{ asset('home/images/hero.png') }}" alt="" class="img-fluid">
                 </div>
             </div>
         </div>
@@ -80,20 +99,22 @@
                                     @else
                                     src="{{ asset('home/images/defualt_profile.jpg') }}" @endif
                                         alt="Card image cap">
-                                    <div class="w3-display-bottomleft w3-container w3-text-black"
+                                    <div class="w3-display-bottomleft w3-container w3-text-black mt-3"
                                         style="display: flex; justify-content:space-between; align-items:center;">
-                                        <h2>{{ $user->name }}</h2>
-                                        @if ($user->class)
-                                            <h5>$ {{ $user->class->price }}</h5>
-                                        @endif
+                                        <h3>{{ $user->name }}</h3>
+                                        @foreach ($user->classes as $class)
+                                            <h3>$
+                                                {{ $class->price?? 'No price Assigned' }}
+                                            </h3>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="w3-container">
-                                    @if ($user->class && $user->class->subject)
-                                        <p><i
-                                                class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->class->subject->subject_name }}
-                                        </p>
-                                    @endif
+                                    @foreach ($user->classes as $class)
+                                    <p><i class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                                        {{ $class->subject->subject_name ?? 'No Subject Assigned' }}
+                                    </p>
+                                @endforeach
                                     <p><i
                                             class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->location }}
                                     </p>
@@ -120,67 +141,32 @@
                 </div>
             </div>
 
+        </div>
+        <div class="d-flex justify-content-center numeric-pagination-container">
+            <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
+                <div>
 
-            {{-- <div class="d-flex justify-content-center mt-3">
-                <a href="" class="call_to-btn  ">
+                    <!-- Previous button -->
+                    @if ($users->currentPage() > 1)
+                        <a href="{{ $users->previousPageUrl() }}" class="numeric-pagination-link">&lt;</a>
+                    @endif
 
-                    <span>
-                        See More
-                    </span>
-                    <img src="{{ asset('home/images/right-arrow.png') }}" alt="">
-                </a>
-            </div> --}}
+                    <!-- Numeric page links -->
+                    @foreach ($users->getUrlRange(max(1, $users->currentPage() - 5), min($users->lastPage(), $users->currentPage() + 4)) as $page => $url)
+                        <a href="{{ $url }}"
+                            class="numeric-pagination-link {{ $users->currentPage() == $page ? 'active' : '' }}">{{ $page }}</a>
+                    @endforeach
+
+                    <!-- Next button -->
+                    @if ($users->currentPage() < $users->lastPage())
+                        <a href="{{ $users->nextPageUrl() }}" class="numeric-pagination-link">&gt;</a>
+                    @endif
+
+                </div>
+            </nav>
         </div>
     </section>
 
-    <!-- teacher section -->
-
-    <!-- vehicle section -->
-    {{-- <section class="vehicle_section layout_padding">
-        <div class="container">
-            <h2 class="main-heading ">
-                Vehicles Facility
-            </h2>
-            <p class="text-center">
-                There are many variations of passages of Lorem Ipsum available, but the majority hThere are many variations
-                of
-                passages of Lorem Ipsum available, but the majority h
-            </p>
-            <div class="layout_padding-top">
-                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="vehicle_img-box ">
-                                <img src="{{ asset('home/images/bus.png') }}" alt="" class="img-fluid w-100">
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="vehicle_img-box ">
-                                <img src="{{ asset('home/images/bus.png') }}" alt="" class="img-fluid w-100">
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="vehicle_img-box ">
-                                <img src="{{ asset('home/images/bus.png') }}" alt="" class="img-fluid w-100">
-                            </div>
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section> --}}
-
-
-    <!-- vehicle section -->
     <!-- client section -->
     <section class="client_section layout_padding">
         <div class="container">

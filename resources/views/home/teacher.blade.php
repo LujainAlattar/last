@@ -302,10 +302,10 @@
     <!-- Teacher Details Section -->
 
     <!-- Book Now Section -->
-    <section class="book-now-section layout_padding" style="margin-top: -100px">
+    <section class="book-now-section layout_padding" style="margin-top: -50px">
         <div class="container">
-            <h2 class="main-heading">Book Now</h2>
-            <div class="book-now-container">
+            <h2 class="main-heading mb-4">Book Now</h2>
+            <div class="book-now-container"  style="max-height: 300px; overflow-y: auto;">
                 <table class="table">
                     <thead>
                         <tr>
