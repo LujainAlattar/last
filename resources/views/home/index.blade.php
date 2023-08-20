@@ -14,12 +14,12 @@
         }
 
         .card-img-top {
-            width: 300px;
+            width: 330px;
             height: 300px;
         }
 
         .card_teacher {
-            width: 330px;
+            width: 360px;
             height: 600px;
         }
 
@@ -104,17 +104,17 @@
                                         <h3>{{ $user->name }}</h3>
                                         @foreach ($user->classes as $class)
                                             <h3>$
-                                                {{ $class->price?? 'No price Assigned' }}
+                                                {{ $class->price ?? 'No price Assigned' }}
                                             </h3>
                                         @endforeach
                                     </div>
                                 </div>
                                 <div class="w3-container">
                                     @foreach ($user->classes as $class)
-                                    <p><i class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>
-                                        {{ $class->subject->subject_name ?? 'No Subject Assigned' }}
-                                    </p>
-                                @endforeach
+                                        <p><i class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                                            {{ $class->subject->subject_name ?? 'No Subject Assigned' }}
+                                        </p>
+                                    @endforeach
                                     <p><i
                                             class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->location }}
                                     </p>
