@@ -280,22 +280,21 @@
                     <div class="teacher-info">
                         <h2>{{ $user->name }}</h2>
                         <p><i class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>
-                            @if ($user->class && $user->class->subject)
-                                {{ $user->class->subject->subject_name }}
+                            @if ($class && $subject)
+                                {{ $subject->subject_name }}
                             @else
                                 No Subject Assigned
                             @endif
                         </p>
+                        @if ($class)
+                            <p><i class="fa fa-dollar fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $class->price }}</p>
+                        @endif
                         <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->location }}</p>
                         <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->email }}</p>
                         <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->phone }}</p>
-                        @if ($user->class)
-                            <p><i
-                                    class="fa fa-dollar fa-fw w3-margin-right w3-large w3-text-teal"></i>{{ $user->class->price }}
-                            </p>
-                        @endif
                     </div>
                 </div>
+
             </div>
         </div>
     </section>

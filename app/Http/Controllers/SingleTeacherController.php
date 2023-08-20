@@ -8,6 +8,7 @@ use App\Models\Booking;
 use App\Models\Classes;
 use App\Models\Payment;
 use App\Models\Rating;
+use App\Models\Subject;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -26,7 +27,11 @@ class SingleTeacherController extends Controller
             return redirect()->back()->with('error', 'Class not found.');
         }
 
+        // Retrieve the subject associated with the class
+        $subject = Subject::find($class->subject_id);
+
         $classId = $class->id;
+
         $appointments = Booking::where('class_id', $classId)
             ->orderBy('start_time', 'asc') // Order by start_time in ascending order
             ->get();
@@ -35,7 +40,7 @@ class SingleTeacherController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('home.teacher', compact('user', 'class', 'appointments', 'ratings'));
+        return view('home.teacher', compact('user', 'class', 'appointments', 'ratings', 'subject'));
     }
 
     public function select($id)
