@@ -106,7 +106,7 @@
                                     </td>
                                     <td>
                                         @if ($appointment->status == 1)
-                                            <a href="{{ route('teacher-showuserappointment-dashboard.show', $appointment->id) }}"
+                                            <a href="{{ route('teacher-showuserappointment-dashboard', $appointment->id) }}"
                                                 class="btn"
                                                 style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;">
                                                 <i class="fa fa-eye"></i>

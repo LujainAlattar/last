@@ -17,7 +17,7 @@
                         <div class="card-body">
                             <h5>User Details</h5>
                             <div class="user-img-in">
-                                <img src="{{ $user->img ? asset('storage/uploads/images/' . $user->img) : asset('home/images/default_profile.jpg') }}" alt="User Image">
+                                <img src="{{ $user->img ? asset('storage/uploads/images/' . $user->img) : asset('home/images/defualt_profile.jpg') }}" alt="User Image">
                             </div>
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Name</label>
@@ -62,7 +62,7 @@
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label">Subject Name</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="{{ $class->subject->name }}" readonly />
+                                    <input type="text" class="form-control" value="{{ $subject->subject_name }}" readonly />
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -108,7 +108,7 @@
 
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
-                                    <a href="{{ route('teacher-showuserappointment-dashboard') }}" class="btn btn-primary">Back</a>
+                                    <a href="{{ route('teacher-showappointment-dashboard') }}" class="btn btn-primary">Back</a>
                                 </div>
                             </div>
                         </div>
