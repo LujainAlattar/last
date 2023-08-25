@@ -13,6 +13,9 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\TeacherProfileController;
 use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\TeacherDahboardController;
 use App\Http\Controllers\SingleTeacherController;
 
@@ -87,6 +90,12 @@ Route::get('/teacher-search', [TeacherController::class, 'search']);
 // route to subject controller and dashboard
 Route::resource('/subject-dashboard', SubjectController::class);
 Route::get('/subject-search', [SubjectController::class, 'search']);
+
+// route to Reviews controller and dashboard
+Route::resource('/Review-dashboard', RatingController::class);
+
+// route to Bookings dashboard controller and dashboard
+Route::resource('/Booking-dashboard', PaymentController::class);
 
 // route to admin profile
 Route::get('/admin-profile', [AdminProfileController::class, 'index'])->name('admin-profile');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rating;
 use Illuminate\Http\Request;
 
 class RatingController extends Controller
@@ -11,7 +12,8 @@ class RatingController extends Controller
      */
     public function index()
     {
-        //
+        $ratings = Rating::with('class.subject', 'class.user')->get();
+        return view('admin.reviews.index', compact('ratings'));
     }
 
     /**

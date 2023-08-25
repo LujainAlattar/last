@@ -108,15 +108,15 @@
                             </a>
                         </li>
 
-                        <li class="menu-item">
-                            <a href="#" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('Booking-dashboard.index') ? 'active' : '' }}">
+                            <a href="{{ route('Booking-dashboard.index') }}" class="menu-link">
                                 <i class="menu-icon tf-icons fa-solid fa-credit-card"></i>
                                 <div data-i18n="Analytics">Booking & Payment</div>
                             </a>
                         </li>
 
-                        <li class="menu-item">
-                            <a href="#" class="menu-link">
+                        <li class="menu-item {{ request()->routeIs('Review-dashboard.index') ? 'active' : '' }}">
+                            <a href="{{ route('Review-dashboard.index') }}" class="menu-link">
                                 <i class="menu-icon tf-icons fa-regular fa-star-half-stroke"></i>
                                 <div data-i18n="Analytics">Reviews</div>
                             </a>
