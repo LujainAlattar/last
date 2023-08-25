@@ -13,9 +13,14 @@ class Payment extends Model
         'book_id',
         'price',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class);
     }
 }

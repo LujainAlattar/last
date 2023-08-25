@@ -91,36 +91,44 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Teacher</th>
-                                            <th>Subject</th> <!-- New column for displaying the subject name -->
-                                            {{-- <th>Action</th> --}}
+                                            <th>Subject</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($userAppointments as $appointment)
+                                        @forelse ($appointmentsData as $appointment)
                                             <tr>
-                                                <td>{{ $appointment->start_time }}</td>
-                                                <td>{{ $appointment->end_time }}</td>
+                                                <td>{{ $appointment['appointment']->start_time }}</td>
+                                                <td>{{ $appointment['appointment']->end_time }}</td>
+                                                <td>{{ $appointment['teacher']->name }}</td>
+                                                <td>{{ $appointment['class']->subject->subject_name }}</td>
                                                 <td>
-                                                    {{ $appointment->class->teacher->name }}
+                                                    <a href="{{ route('show-user-appointment', $appointment['appointment']->id) }}"
+                                                        class="btn"
+                                                        style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <form action="{{ route('delete-user-appointment', $appointment['appointment']->id) }}"
+                                                        method="POST" style="display: inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <a href="javascript:void(0);"
+                                                            onclick="event.preventDefault();
+                                                            if (confirm('Are you sure you want to delete this appointment?')) {
+                                                                $(this).closest('form').submit();
+                                                            }"
+                                                            class="btn"
+                                                            style="border: none; color: rgba(246, 16, 16, 0.7); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </form>
                                                 </td>
-                                                <td>
-                                                    {{ $appointment->class->subject->name }}
-                                                    <!-- Display the subject name associated with the appointment's class -->
-                                                </td>
-                                                {{-- <td>
-                                                    @if ($appointment->status == 0)
-                                                        <form id="selectForm{{ $appointment->id }}"
-                                                            action="{{ route('payment') }}" method="POST"
-                                                            onsubmit="saveAppointmentAndClassId({{ $appointment->id }}, {{ $user->class->id ?? 'null' }})">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-select">Select</button>
-                                                        </form>
-                                                    @else
-                                                        <p>This appointment is already taken.</p>
-                                                    @endif
-                                                </td> --}}
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="5" style="text-align: center;">No appointments found.</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -132,7 +140,6 @@
         </div>
     </div>
 @endsection
-
 
 @section('script-content')
     {{-- ajax to change the user img on click --}}

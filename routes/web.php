@@ -108,6 +108,8 @@ Route::get('/edit-user-password', [UserProfileController::class, 'editpassword']
 Route::put('/edit-user-password/{id}', [UserProfileController::class, 'updatepassword'])->name('update-user-password');
 Route::get('/user-profile/editimg/{id}', [UserProfileController::class, 'editimg'])->name('edit-user-img');
 Route::put('/user-profile/updateimg/{id}', [UserProfileController::class, 'updateimg'])->name('update-user-img');
+Route::get('/user-profile/showappointment/{id}', [UserProfileController::class, 'showapp'])->name('show-user-appointment');
+Route::any('/user-profile/deleteappointment/{id}', [UserProfileController::class, 'deleteapp'])->name('delete-user-appointment');
 
 
 

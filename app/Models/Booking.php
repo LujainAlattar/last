@@ -22,4 +22,13 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'book_id');
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'class_id'); // Specify the custom foreign key
+    }
 }

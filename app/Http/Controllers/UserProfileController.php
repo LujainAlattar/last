@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Booking;
+use App\Models\Classes;
+use App\Models\Payment;
+use App\Models\Subject;
 
 
 use Illuminate\Http\Request;
@@ -15,19 +19,30 @@ class UserProfileController extends Controller
 {
     public function index()
     {
-        $user = User::with('payments', 'bookings.appointments', 'class.teacher')->find(auth()->id());
+        $authId = Auth::id();
+        $user = User::find($authId);
+        $appointments = Booking::where('user_id', $authId)->get();
 
-        // Get all the data you need
-        $userPayments = $user->payments;
-        $userBookings = $user->bookings;
-        $userAppointments = $user->appointments;
-        $userClass = $user->class;
-        $teacherUser = $userClass->teacher; // Retrieve the teacher's user associated with the class
+        $appointmentsData = [];
 
+        foreach ($appointments as $appointment) {
+            $class = Classes::with('user')->find($appointment->class_id);
+            $subject = Subject::find($class->subject_id);
+            $payment = Payment::where('book_id', $appointment->id)->first();
+            $teacher = User::find($class->user_id);
 
-        // Pass the data to the view
-        return view('user-profile.profile', compact('user', 'userPayments', 'userBookings', 'userAppointments', 'userClass', 'teacherUser'));
+            $appointmentsData[] = [
+                'class' => $class,
+                'subject' => $subject,
+                'appointment' => $appointment,
+                'payment' => $payment,
+                'teacher' => $teacher,
+            ];
+        }
+
+        return view('user-profile.profile', compact('appointmentsData','user'));
     }
+
 
     public function editdata()
     {
@@ -99,5 +114,39 @@ class UserProfileController extends Controller
         $user->save();
 
         return redirect()->route('user-profile')->with('flash_message', 'User updated successfully.');
+    }
+
+    public function showapp($id)
+    {
+        $authId = Auth::id();
+
+        $appointment = Booking::where('id', $id)->first();
+
+        if (!$appointment) {
+            return redirect()->back()->with('error', 'Appointment not found.');
+        }
+
+        $class = Classes::with('user')->find($appointment->class_id);
+        $subject = Subject::find($class->subject_id);
+        $payment = Payment::where('book_id', $appointment->id)->first();
+
+        $user = User::find($authId); // Authenticated user
+        $teacher = User::find($class->user_id); // User associated with the class
+
+        return view('user-profile.showapp', compact('class', 'subject', 'appointment', 'payment', 'user', 'teacher'));
+    }
+
+    public function deleteapp($id)
+    {
+        $appointment = Booking::findOrFail($id);
+
+        if ($appointment->payment) {
+            $appointment->payment->delete();
+        }
+
+        $appointment->update(['user_id' => null]);
+
+
+        return redirect()->route('user-profile', ['success' => 'Appointment deleted successfully']);
     }
 }

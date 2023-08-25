@@ -36,4 +36,9 @@ class Classes extends Model
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'class_id'); // Specify the custom foreign key
+    }
 }
