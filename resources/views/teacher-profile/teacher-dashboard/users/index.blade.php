@@ -67,7 +67,7 @@
             <div class="card">
                 {{-- <h5 class="card-header">users rows</h5> --}}
                 <br>
-                <div class="table-responsive text-nowrap">
+                <div class="table text-nowrap">
                     <table class="table table-striped">
                         <div class="container-table-header">
                             <h4 class="fw-bold py-3 mb-4">Students Table</h4>
@@ -78,7 +78,8 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Location</th>
-                                <th>Actions</th>
+                                <th>Notes & Assignments
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0" id="alldata">
@@ -89,14 +90,8 @@
                                     <td>{{ $student->email }}</td>
                                     <td>{{ $student->location }}</td>
                                     <td>
-                                        <a href="{{ route('teacher-studentdata-dashboard', $student->id) }}" class="btn"
-                                            style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
-                                                class="fa fa-eye"></i></a>
-                                        <a href="{{ route('teacher-assignment-dashboard', $student->id) }}" class="btn"
-                                            style="border: none; color: rgba(53, 211, 21, 0.814); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
-                                                class="fa-solid fa-pen-to-square"></i></a>
                                         <a href="{{ route('teacher-notes-dashboard', $student->id) }}" class="btn"
-                                            style="border: none; color: rgba(53, 211, 21, 0.814); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
+                                            style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
                                                 class="fa-solid fa-comments"></i></a>
                                     </td>
                                 </tr>

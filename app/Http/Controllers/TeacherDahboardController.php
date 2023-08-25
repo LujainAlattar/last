@@ -27,7 +27,7 @@ class TeacherDahboardController extends Controller
         $teacherId = Auth::id();
 
         // Retrieve the students where the teacher ID matches the user_id in the users table
-        $students = User::whereHas('classes', function ($query) use ($teacherId) {
+        $students = User::whereHas('bookings.class', function ($query) use ($teacherId) {
             $query->where('user_id', $teacherId);
         })->where('role_id', 2)->get();
 
@@ -198,6 +198,8 @@ class TeacherDahboardController extends Controller
 
         return view('teacher-profile.teacher-dashboard.booking.index', compact('appointments'));
     }
+
+
     public function showreviews()
     {
         $userId = Auth::id();
