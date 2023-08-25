@@ -44,24 +44,6 @@
             margin-left: 4px;
             height: 40px;
         }
-        .numeric-pagination-container {
-            margin-top: 20px;
-        }
-
-        .numeric-pagination-link {
-            display: inline-block;
-            font-size: 14px;
-            padding: 4px 8px;
-            margin: 0 2px;
-            color: #007bff;
-            border: 1px solid #007bff;
-            text-decoration: none;
-        }
-
-        .numeric-pagination-link.active {
-            background-color: #007bff;
-            color: white;
-        }
     </style>
 @endsection
 
@@ -133,31 +115,13 @@
                         {{-- for the search --}}
                         <tbody id="Content" class="searchdata" ></tbody>
                     </table>
+                    <div class="d-flex justify-content-center">
+                        {{ $users->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
             <!--/ Striped Rows -->
-            <div class="d-flex justify-content-center numeric-pagination-container">
-                <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
-                    <div>
 
-                            <!-- Previous button -->
-                            @if ($users->currentPage() > 1)
-                                <a href="{{ $users->previousPageUrl() }}" class="numeric-pagination-link">&lt;</a>
-                            @endif
-
-                            <!-- Numeric page links -->
-                            @foreach ($users->getUrlRange(max(1, $users->currentPage() - 5), min($users->lastPage(), $users->currentPage() + 4)) as $page => $url)
-                                <a href="{{ $url }}" class="numeric-pagination-link {{ $users->currentPage() == $page ? 'active' : '' }}">{{ $page }}</a>
-                            @endforeach
-
-                            <!-- Next button -->
-                            @if ($users->currentPage() < $users->lastPage())
-                                <a href="{{ $users->nextPageUrl() }}" class="numeric-pagination-link">&gt;</a>
-                            @endif
-
-                    </div>
-                </nav>
-            </div>
         </div>
     </div>
 @endsection

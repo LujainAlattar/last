@@ -12,8 +12,11 @@ class RatingController extends Controller
      */
     public function index()
     {
-        $ratings = Rating::with('class.subject', 'class.user')->get();
-        return view('admin.reviews.index', compact('ratings'));
+        $ratingsQuery = Rating::with('class.subject', 'class.user');
+        $paginatedRatings = $ratingsQuery->paginate(10);
+
+        return view('admin.reviews.index', compact('paginatedRatings'));
+
     }
 
     /**

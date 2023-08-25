@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Booking;
 use App\Models\Classes;
 use App\Models\Payment;
+use App\Models\Rating;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +60,6 @@ class TeacherDahboardController extends Controller
         return view('teacher-profile.teacher-dashboard.booking.create');
     }
 
-
     public function appointment(Request $request)
     {
         $validatedData = $request->validate([
@@ -70,11 +71,17 @@ class TeacherDahboardController extends Controller
         $class = Classes::where('user_id', $userId)->first();
 
         if ($class) {
+            // Calculate the hours (end time minus start time)
+            $startTime = Carbon::parse($validatedData['start_time']);
+            $endTime = Carbon::parse($validatedData['end_time']);
+            $hoursDiff = $endTime->diffInHours($startTime);
+
             Booking::create([
                 'class_id' => $class->id,
                 'start_time' => $validatedData['start_time'],
                 'end_time' => $validatedData['end_time'],
                 'status' => 0,
+                'hours' => $hoursDiff, // Set the calculated 'hours' attribute
             ]);
 
             return redirect()->route('teacher-showappointment-dashboard')->with('success', 'Appointment created successfully!');
@@ -82,6 +89,7 @@ class TeacherDahboardController extends Controller
             return redirect()->back()->with('error', 'Class not found.');
         }
     }
+
 
 
 
@@ -119,7 +127,13 @@ class TeacherDahboardController extends Controller
             $booking->class_id = $class->id;
             $booking->start_time = $validatedData['start_time'];
             $booking->end_time = $validatedData['end_time'];
+            // Calculate the hours (end time minus start time) and set the 'hours' attribute
+            $startTime = Carbon::parse($booking->start_time);
+            $endTime = Carbon::parse($booking->end_time);
+            $hoursDiff = $endTime->diffInHours($startTime);
+            $booking->hours = $hoursDiff;
             $booking->status = 0;
+
             $booking->save();
 
             return redirect()->route('teacher-showappointment-dashboard')->with('success', 'Appointment updated successfully!');
@@ -186,6 +200,14 @@ class TeacherDahboardController extends Controller
     }
     public function showreviews()
     {
-        return view('teacher-profile.teacher-dashboard.index');
+        $userId = Auth::id();
+
+        // Retrieve the user's classes
+        $userClasses = Classes::where('user_id', $userId)->get();
+
+        // Retrieve the reviews for those classes with pagination
+        $reviews = Rating::whereIn('class_id', $userClasses->pluck('id'))->paginate(10);
+
+        return view('teacher-profile.teacher-dashboard.reviews.index', compact('reviews'));
     }
 }

@@ -76,7 +76,7 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0" id="alldata">
-                            @foreach ($ratings as $rating)
+                            @foreach ($paginatedRatings as $rating)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $rating->name }}</td>
@@ -92,6 +92,9 @@
 
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-center">
+                        {{ $paginatedRatings->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
             <!--/ Striped Rows -->

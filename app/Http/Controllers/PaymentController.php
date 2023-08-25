@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -11,8 +13,12 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $bookingsQuery = Booking::with(['class.subject', 'class.user', 'payment']);
+        $paginatedBookings = $bookingsQuery->paginate(10);
+
+        return view('admin.booking.index', compact('paginatedBookings'));
     }
+
 
     /**
      * Show the form for creating a new resource.
