@@ -5,18 +5,35 @@
 @endsection
 
 @section('header-style')
-<style>
-    .row{
-        min-height: 425px;
-    }
-    .container{
-        margin-left: 50px
-    }
-    .left, .right{
-        width: 550px;
-    }
+    <style>
+        .row {
+            min-height: 425px;
+        }
 
-</style>
+        .container {
+            margin-left: 50px
+        }
+
+        .left,
+        .right {
+            width: 550px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .row {
+                min-height: 525px;
+            }
+
+            .container {
+                margin-left: 30px
+            }
+
+            .left,
+            .right {
+                width: 300px;
+            }
+        }
+    </style>
 @endsection
 
 

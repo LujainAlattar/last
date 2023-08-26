@@ -261,6 +261,23 @@
             margin-bottom: 50px;
 
         }
+        .book-now-section{
+            margin-top: -50px;
+        }
+    </style>
+
+    <style>
+        @media screen and (max-width: 1000px) {
+        .layout_padding{
+           padding: 150px 0 ;
+        }
+        .teacher-info{
+            margin: 20px;
+        }
+        .book-now-section{
+            margin-top: -170px;
+        }
+    }
     </style>
 @endsection
 
@@ -301,7 +318,7 @@
     <!-- Teacher Details Section -->
 
     <!-- Book Now Section -->
-    <section class="book-now-section layout_padding" style="margin-top: -50px">
+    <section class="book-now-section layout_padding" >
         <div class="container">
             <h2 class="main-heading mb-4">Book Now</h2>
             <div class="book-now-container"  style="max-height: 300px; overflow-y: auto;">

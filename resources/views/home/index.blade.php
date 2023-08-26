@@ -137,9 +137,50 @@
         }
 
         .form-error {
-        color: red;
-    }
+            color: red;
+        }
+        .filter-section{
+            display: flex;
+            justify-content: space-between;
+        }
     </style>
+
+{{-- reponsive design --}}
+<style>
+    @media screen and (max-width: 841px) {
+        .filter-section{
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+    @media screen and (max-width: 400px) {
+        .card_teacher{
+            width: 300px;
+        }
+        .card-img-top{
+            width: 280px;
+        }
+        input[type=range]{
+            width: 250px;
+        }
+    }
+    @media screen and (max-width: 300px) {
+        .card_teacher{
+            width: 250px;
+        }
+        .card-img-top{
+            width: 230px;
+            padding: 5px;
+        }
+        input[type=range]{
+            width: 200px;
+        }
+        .ml-4{
+            margin-left: .2rem !important;
+        }
+    }
+</style>
+
 @endsection
 
 @section('content')
@@ -177,9 +218,9 @@
                 Meet our team of dedicated and experienced instructors who are passionate about guiding you on your learning
                 journey.
             </p>
-            <div class="d-flex justify-content-between mb-3">
-                <div class="form-group">
-                    <label for="subjectFilter" class="form-label">Filter by Subject:</label>
+            <div class=" mb-3 filter-section">
+                <div class="form-group filter">
+                    <label for="subjectFilter" class="form-label"> Subject:</label>
                     <select class="form-select" id="subjectFilter">
                         <option value="">All Subjects</option>
                         @foreach ($subjects as $subject)
@@ -187,8 +228,8 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group" style="display: flex; gap:5px; justify-content:center;">
-                    <label for="priceFilter" class="form-label">Filter by price:</label>
+                <div class="form-group filter" style="display: flex; gap:5px; justify-content:center;">
+                    <label for="priceFilter" class="form-label"> price:</label>
                     <div class="range-slider">
                         <span class="rangeValues">
                             Min Price: <span id="minPriceDisplay">{{ $minprice }}</span> |
@@ -287,8 +328,8 @@
                             </h4>
                             <span>
                                 @for ($i = 1; $i <= $randomReview->star_rating; $i++)
-                                <span><i class="fa fa-star text-warning"></i></span>
-                            @endfor
+                                    <span><i class="fa fa-star text-warning"></i></span>
+                                @endfor
                             </span>
                         </div>
                     </div>
@@ -334,7 +375,8 @@
                                         <p class="form-error" id="email-error"></p>
                                     </div>
                                     <div>
-                                        <input type="text" name="message" id="message" placeholder="Message" class="input_message">
+                                        <input type="text" name="message" id="message" placeholder="Message"
+                                            class="input_message">
                                         <p class="form-error" id="message-error"></p>
                                     </div>
                                     <div class="d-flex justify-content-center">
@@ -427,7 +469,7 @@
             }
         });
     </script>
-     <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('contact-form');
             const nameInput = document.getElementById('name');
