@@ -36,7 +36,7 @@
                             <div class="d-flex flex-column align-items-center text-center">
                                 <div class="mt-3">
                                     <h4>Show notes & assignments</h4>
-                                    <a href="{{ route('shownotes') }}">Show</a>
+                                    <a href="{{ route('shownotes') }}"  class="btn btn-primary">Show</a>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
 
 
 
-                    <section class="book-now-section layout_padding" style="margin-top: -100px">
+                    <section class="book-now-section layout_padding" style="margin-top: -50px">
                         <div class="container">
                             <h2 class="main-heading">My Appointments</h2>
                             <div class="book-now-container">
