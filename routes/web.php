@@ -14,6 +14,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\TeacherProfileController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\TeacherDahboardController;
@@ -119,7 +120,7 @@ Route::get('/user-profile/editimg/{id}', [UserProfileController::class, 'editimg
 Route::put('/user-profile/updateimg/{id}', [UserProfileController::class, 'updateimg'])->name('update-user-img');
 Route::get('/user-profile/showappointment/{id}', [UserProfileController::class, 'showapp'])->name('show-user-appointment');
 Route::any('/user-profile/deleteappointment/{id}', [UserProfileController::class, 'deleteapp'])->name('delete-user-appointment');
-
+Route::any('/assignments',[UserProfileController::class, 'shownotes'])->name('shownotes');
 
 
 // route to teacher profile
@@ -139,8 +140,8 @@ Route::get('/teacher-user-dashboard', [TeacherDahboardController::class, 'index'
 Route::get('/teacher-student-dashboard', [TeacherDahboardController::class, 'showstudent'])->name('teacher-student-dashboard');
 Route::get('/teacher-studentdata-dashboard', [TeacherDahboardController::class, 'showstudentdata'])->name('teacher-studentdata-dashboard');
 Route::get('/teacher-studenthistory-dashboard/{id}', [TeacherDahboardController::class, 'studenthistory'])->name('teacher-studenthistory-dashboard');
-Route::get('/teacher-assignment-dashboard', [TeacherDahboardController::class, 'assignments'])->name('teacher-assignment-dashboard');
-Route::get('/teacher-notes-dashboard', [TeacherDahboardController::class, 'notes'])->name('teacher-notes-dashboard');
+Route::any('/teacher-assignment-dashboard', [TeacherDahboardController::class, 'assignments'])->name('teacher-assignment-dashboard');
+Route::any('/teacher-notes-dashboard', [TeacherDahboardController::class, 'notes'])->name('teacher-notes-dashboard');
 Route::put('/teacher-appointment-dashboard', [TeacherDahboardController::class, 'appointment'])->name('teacher-appointment-dashboard');
 Route::get('/teacher-showappointment-dashboard', [TeacherDahboardController::class, 'showappointment'])->name('teacher-showappointment-dashboard');
 Route::get('/teacher-createappointment-dashboard', [TeacherDahboardController::class, 'createappointment'])->name('teacher-createappointment-dashboard');

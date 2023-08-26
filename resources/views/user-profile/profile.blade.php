@@ -31,6 +31,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card mt-5">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <div class="mt-3">
+                                    <h4>Show notes & assignments</h4>
+                                    <a href="{{ route('shownotes') }}">Show</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-8">
                     <div class="card mb-3">
@@ -83,7 +93,7 @@
 
                     <section class="book-now-section layout_padding" style="margin-top: -100px">
                         <div class="container">
-                            <h2 class="main-heading">Book Now</h2>
+                            <h2 class="main-heading">My Appointments</h2>
                             <div class="book-now-container">
                                 <table class="table">
                                     <thead>
@@ -108,7 +118,8 @@
                                                         style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    <form action="{{ route('delete-user-appointment', $appointment['appointment']->id) }}"
+                                                    <form
+                                                        action="{{ route('delete-user-appointment', $appointment['appointment']->id) }}"
                                                         method="POST" style="display: inline">
                                                         @csrf
                                                         @method('DELETE')

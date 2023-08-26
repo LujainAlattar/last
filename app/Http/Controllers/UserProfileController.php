@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Classes;
 use App\Models\Payment;
 use App\Models\Subject;
+use App\Models\Note;
 
 
 use Illuminate\Http\Request;
@@ -148,5 +149,14 @@ class UserProfileController extends Controller
 
 
         return redirect()->route('user-profile', ['success' => 'Appointment deleted successfully']);
+    }
+
+    public function shownotes(){
+        $studentId = Auth::id();
+        $previousNotes = Note::where('user_id', $studentId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('user-profile.notes', compact('studentId', 'previousNotes'));
     }
 }
