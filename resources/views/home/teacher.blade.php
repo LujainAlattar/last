@@ -332,7 +332,11 @@
                                             method="POST"
                                             onsubmit="saveAppointmentAndClassId({{ $appointment->id }}, {{ $user->class->id ?? 'null' }})">
                                             @csrf
-                                            <button type="submit" class="btn btn-select">Select</button>
+                                            @if (auth()->check())
+                                                <button type="submit" class="btn btn-select">Select</button>
+                                            @else
+                                                <p>You should be logged in to make appointment.</p>
+                                            @endif
                                         </form>
                                     @else
                                         <p>This appointment is already taken.</p>
