@@ -33,11 +33,6 @@
                                     <input type="text" id="cvv" name="cvv" class="form-control" pattern="\d{3}" maxlength="3" required>
                                 </div>
                             </div>
-                            {{-- <div class="form-group">
-                                <label for="amount">Amount</label>
-                                <input type="text" id="amount" name="amount" class="form-control" value="{{ $class->price }}"
-                                    readonly>
-                            </div> --}}
                             <input type="hidden" id="selectedAppointmentId" name="selectedAppointmentId">
                             <input type="hidden" id="selectedClassId" name="selectedClassId">
                             <button type="submit" class="btn btn-primary">Pay Now</button>

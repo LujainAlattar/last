@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminHomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterTeacherController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -20,7 +21,6 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\TeacherDahboardController;
 use App\Http\Controllers\SingleTeacherController;
 use App\Http\Controllers\ContactController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -74,9 +74,7 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::any('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 // route for admin dashboard
-Route::get('/admins', function () {
-    return view('admin.index');
-})->name('admin');
+Route::get('/admins', [AdminHomeController::class, 'index'])->name('admin');
 
 
 // route to user controller and dashboard
@@ -98,6 +96,9 @@ Route::resource('/Review-dashboard', RatingController::class);
 
 // route to Bookings dashboard controller and dashboard
 Route::resource('/Booking-dashboard', PaymentController::class);
+
+// route to Contact  dashboard controller and dashboard
+Route::get('/Contact-dashboard', [ContactController::class, 'index'])->name('Contact-dashboard');
 
 // route to admin profile
 Route::get('/admin-profile', [AdminProfileController::class, 'index'])->name('admin-profile');

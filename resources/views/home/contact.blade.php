@@ -4,6 +4,15 @@
 @endsection
 
 
+@section('header-style')
+<style>
+    .form-error {
+        color: red;
+    }
+</style>
+
+@endsection
+
 @section('content')
     <!-- contact section -->
 
@@ -23,16 +32,19 @@
                     <div class="row">
                         <div class="col-md-6 mx-auto">
                             <div class="contact-form">
-                                <form action="{{ route('contact.store') }}" method="POST">
+                                <form action="{{ route('contact.store') }}" method="POST" id="contact-form">
                                     @csrf
                                     <div>
-                                        <input type="text" name="name" placeholder="Name">
+                                        <input type="text" name="name" id="name" placeholder="Name">
+                                        <p class="form-error" id="name-error"></p>
                                     </div>
                                     <div>
-                                        <input type="email" name="email" placeholder="Email">
+                                        <input type="email" name="email" id="email" placeholder="Email">
+                                        <p class="form-error" id="email-error"></p>
                                     </div>
                                     <div>
-                                        <input type="text" name="message" placeholder="Message" class="input_message">
+                                        <input type="text" name="message" id="message" placeholder="Message" class="input_message">
+                                        <p class="form-error" id="message-error"></p>
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="submit" class="btn_on-hover">
@@ -54,30 +66,44 @@
 @endsection
 @section('script-content')
     <script>
-        // {{-- // This example adds a marker to indicate the position of Bondi Beach in Sydney,
-    // // Australia. --}}
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 11,
-                center: {
-                    lat: 40.645037,
-                    lng: -73.880224
-                },
-            });
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contact-form');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
 
-            var image = 'images/maps-and-flags.png';
-            var beachMarker = new google.maps.Marker({
-                position: {
-                    lat: 40.645037,
-                    lng: -73.880224
-                },
-                map: map,
-                icon: image
+            form.addEventListener('submit', function(event) {
+                let valid = true;
+
+                // Reset error messages
+                document.querySelectorAll('.form-error').forEach(function(errorElement) {
+                    errorElement.textContent = '';
+                });
+
+                // Validate name
+                if (nameInput.value.trim() === '') {
+                    valid = false;
+                    document.getElementById('name-error').textContent = 'Name is required';
+                }
+
+                // Validate email
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(emailInput.value)) {
+                    valid = false;
+                    document.getElementById('email-error').textContent = 'Invalid email format';
+                }
+
+                // Validate message
+                if (messageInput.value.trim() === '') {
+                    valid = false;
+                    document.getElementById('message-error').textContent = 'Message is required';
+                }
+
+                if (!valid) {
+                    event.preventDefault();
+                }
             });
-        }
-    </script>
-    <!-- google map js -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap">
+        });
     </script>
 @endsection
 <!-- end google map js -->

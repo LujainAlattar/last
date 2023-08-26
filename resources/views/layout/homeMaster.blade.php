@@ -47,7 +47,7 @@
         <header class="header_section">
             <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="{{ route('home') }}">
                         <img src="{{ asset('home/images/logo.png') }}" alt="">
                         <span>
                             EduPro
@@ -129,32 +129,7 @@
 
         <script type="text/javascript" src="{{ asset('home/js/jquery-3.4.1.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('home/js/bootstrap.js') }}"></script>
-        <script>
-            // This example adds a marker to indicate the position of Bondi Beach in Sydney,
-            // Australia.
-            function initMap() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 11,
-                    center: {
-                        lat: 40.645037,
-                        lng: -73.880224
-                    },
-                });
-
-                var image = "{{ asset('home/images/maps-and-flags.png') }}";
-                var beachMarker = new google.maps.Marker({
-                    position: {
-                        lat: 40.645037,
-                        lng: -73.880224
-                    },
-                    map: map,
-                    icon: image
-                });
-            }
-        </script>
-        <!-- google map js -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
-        <!-- end google map js -->
+        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />

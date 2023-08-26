@@ -43,7 +43,7 @@
         <header class="header_section">
             <div class="container">
                 <nav class="navbar navbar-expand-lg custom_nav-container ">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="{{ route('home') }}">
                         <img src="{{ asset('home/images/logo.png') }}" alt="">
                         <span>
                             EduPro
@@ -66,14 +66,6 @@
                                     <a class="nav-link" href="{{ route('about') }}">About</a>
                                 </li>
 
-                                {{-- <li class="nav-item ">
-                                    <a class="nav-link" href="{{ route('teacher') }}"> Teacher </a>
-                                </li> --}}
-
-                                {{-- <li class="nav-item">
-                                    <a class="nav-link" href="vehicle.html"> vehicle </a>
-                                </li> --}}
-
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('contact') }}">Contact Us</a>
                                 </li>
@@ -88,8 +80,8 @@
                                                     <img src="{{ asset('storage/uploads/images/' . auth()->user()->img) }}"
                                                         width="40" height="40" class="rounded-circle">
                                                 @else
-                                                    <img src="{{ asset('home/images/defualt_profile.jpg') }}" width="40"
-                                                        height="40" class="rounded-circle">
+                                                    <img src="{{ asset('home/images/defualt_profile.jpg') }}"
+                                                        width="40" height="40" class="rounded-circle">
                                                 @endif
                                             </a>
                                             @if (auth()->user()->role_id == 2)

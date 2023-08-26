@@ -6,18 +6,33 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Classes;
+use App\Models\Note;
 use App\Models\Payment;
 use App\Models\Rating;
+
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TeacherDahboardController extends Controller
 {
     public function index()
     {
-        return view('teacher-profile.teacher-dashboard.index');
+        $teacherId = Auth::id();
+
+        $students = User::whereHas('bookings.class', function ($query) use ($teacherId) {
+            $query->where('user_id', $teacherId);
+        })->where('role_id', 2)->count();
+
+        $payments = Payment::whereHas('booking.class', function ($query) use ($teacherId) {
+            $query->where('user_id', $teacherId);
+        })->sum('price');
+
+        $classprice = Classes::where('user_id', $teacherId)->value('price');
+
+        return view('teacher-profile.teacher-dashboard.index',compact('students', 'payments', 'classprice'));
     }
 
 
@@ -40,17 +55,57 @@ class TeacherDahboardController extends Controller
         return view('teacher-profile.teacher-dashboard.users.show')->with('student', $student);
     }
 
-
-    public function assignments()
+    public function studenthistory($id)
     {
-        return view('teacher-profile.teacher-dashboard.index');
+        $studentId = $id;
+        $previousNotes = Note::where('user_id', $studentId)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('teacher-profile.teacher-dashboard.users.notes', compact('studentId', 'previousNotes'));
+    }
+
+
+    public function assignments(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'file' => 'required',
+        ]);
+
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+
+        $file->move(public_path('storage/assignments'), $fileName);
+
+        $filePath = 'assignments/' . $fileName;
+
+        $studentId = $request->input('student_id');
+
+        $note = new Note();
+        $note->user_id = $studentId;
+        $note->teacher_id = Auth::id();
+        $note->assignment = $filePath;
+        $note->save();
+
+        return redirect()->route('teacher-student-dashboard')->with('success', 'Assignment added successfully.');
     }
 
 
 
-    public function notes()
+    public function notes(Request $request)
     {
-        return view('teacher-profile.teacher-dashboard.index');
+        $request->validate([
+            'note' => 'required',
+        ]);
+        $studentId = $request->input('student_id');
+        $note = new Note();
+        $note->user_id = $studentId;
+        $note->teacher_id = Auth::id();
+        $note->note = $request->input('note');
+        $note->save();
+
+        return redirect()->route('teacher-student-dashboard')->with('success', 'Assignment added successfully.');
     }
 
 

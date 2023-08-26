@@ -121,6 +121,15 @@
                                 <div data-i18n="Analytics">Reviews</div>
                             </a>
                         </li>
+
+
+                        <li class="menu-item {{ request()->routeIs('Contact-dashboard') ? 'active' : '' }}">
+                            <a href="{{ route('Contact-dashboard') }}" class="menu-link">
+                                <i class="fa-solid fa-phone"></i>
+                                <div data-i18n="Analytics">Contact</div>
+                            </a>
+                        </li>
+
                     @elseif (auth()->user()->role_id == 3)
                         <li class="menu-item {{ request()->routeIs('teacher-user-Dashboard') ? 'active' : '' }}">
                             <a href="{{ route('teacher-user-Dashboard') }}" class="menu-link">
@@ -229,22 +238,6 @@
                                                 href="{{ route('teacher-user-profile') }}">Profile</a>
                                         @endif
                                     </li>
-                                    {{-- <li>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="bx bx-cog me-2"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            <span class="d-flex align-items-center align-middle">
-                                                <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                                                <span class="flex-grow-1 align-middle">Billing</span>
-                                                <span
-                                                    class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                            </span>
-                                        </a>
-                                    </li> --}}
                                     <li>
                                         <div class="dropdown-divider"></div>
                                     </li>
