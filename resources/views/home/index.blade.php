@@ -23,23 +23,117 @@
             height: 600px;
         }
 
-        .numeric-pagination-container {
-            margin-top: 20px;
+        .range-slider {
+            width: 300px;
+            text-align: center;
+            position: relative;
+
+            .rangeValues {
+                display: block;
+            }
         }
 
-        .numeric-pagination-link {
-            display: inline-block;
-            font-size: 14px;
-            padding: 4px 8px;
-            margin: 0 2px;
-            color: #082465;
-            border: 1px solid #082465;
-            text-decoration: none;
+        input[type=range] {
+            -webkit-appearance: none;
+            border: 1px solid white;
+            width: 300px;
+            position: absolute;
+            left: 0;
         }
 
-        .numeric-pagination-link.active {
-            background-color: #082465;
-            color: white;
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 300px;
+            height: 5px;
+            background: #ddd;
+            border: none;
+            border-radius: 3px;
+
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #082465;
+            margin-top: -4px;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #ccc;
+        }
+
+        input[type=range]::-moz-range-track {
+            width: 300px;
+            height: 5px;
+            background: #ddd;
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-moz-range-thumb {
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #21c1ff;
+
+        }
+
+
+        /*hide the outline behind the border*/
+
+        input[type=range]:-moz-focusring {
+            outline: 1px solid white;
+            outline-offset: -1px;
+        }
+
+        input[type=range]::-ms-track {
+            width: 300px;
+            height: 5px;
+            /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+            background: transparent;
+            /*leave room for the larger thumb to overflow with a transparent border */
+            border-color: transparent;
+            border-width: 6px 0;
+            /*remove default tick marks*/
+            color: transparent;
+            z-index: -4;
+
+        }
+
+        input[type=range]::-ms-fill-lower {
+            background: #777;
+            border-radius: 10px;
+        }
+
+        input[type=range]::-ms-fill-upper {
+            background: #ddd;
+            border-radius: 10px;
+        }
+
+        input[type=range]::-ms-thumb {
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #21c1ff;
+        }
+
+        input[type=range]:focus::-ms-fill-lower {
+            background: #888;
+        }
+
+        input[type=range]:focus::-ms-fill-upper {
+            background: #ccc;
         }
     </style>
 @endsection
@@ -57,14 +151,6 @@
                 <p>
                     Personalized private classes for all levels. Passionate instructors. Achieve your goals.
                 </p>
-                {{-- <div class="hero_btn-continer">
-                    <a href="" class="call_to-btn btn_white-border">
-                        <span>
-                            Read more
-                        </span>
-                        <img src="{{ asset('home/images/right-arrow.png') }}" alt="">
-                    </a>
-                </div> --}}
             </div>
             <div class="hero_img-container">
                 <div>
@@ -87,7 +173,34 @@
                 Meet our team of dedicated and experienced instructors who are passionate about guiding you on your learning
                 journey.
             </p>
-            <div class="teacher_container layout_padding2">
+            <div class="d-flex justify-content-between mb-3">
+                <div class="form-group">
+                    <label for="subjectFilter" class="form-label">Filter by Subject:</label>
+                    <select class="form-select" id="subjectFilter">
+                        <option value="">All Subjects</option>
+                        @foreach ($subjects as $subject)
+                            <option value="{{ $subject->subject_name }}">{{ $subject->subject_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group" style="display: flex; gap:5px; justify-content:center;">
+                    <label for="priceFilter" class="form-label">Filter by price:</label>
+                    <div class="range-slider">
+                        <span class="rangeValues">
+                            Min Price: <span id="minPriceDisplay">{{ $minprice }}</span> |
+                            Max Price: <span id="maxPriceDisplay">{{ $maxprice }}</span>
+                        </span>
+                        <input id="minPriceSlider" value="{{ $minprice }}" min="{{ $minprice }}"
+                            max="{{ $maxprice }}" type="range">
+                        <input id="maxPriceSlider" value="{{ $maxprice }}" min="{{ $minprice }}"
+                            max="{{ $maxprice }}" type="range">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="teacher_container layout_padding2" id="filteredTeachers">
                 <div class="card-deck">
                     {{-- cards with pagination --}}
                     @foreach ($users as $user)
@@ -111,7 +224,8 @@
                                 </div>
                                 <div class="w3-container">
                                     @foreach ($user->classes as $class)
-                                        <p><i class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>
+                                        <p class="subject-tag"><i
+                                                class="fa fa-book fa-fw w3-margin-right w3-large w3-text-teal"></i>
                                             {{ $class->subject->subject_name ?? 'No Subject Assigned' }}
                                         </p>
                                     @endforeach
@@ -140,31 +254,11 @@
 
                 </div>
             </div>
-
+            <div class="d-flex justify-content-center mt-4">
+                {{ $users->links('pagination::bootstrap-4') }}
+            </div>
         </div>
-        <div class="d-flex justify-content-center numeric-pagination-container">
-            <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
-                <div>
 
-                    <!-- Previous button -->
-                    @if ($users->currentPage() > 1)
-                        <a href="{{ $users->previousPageUrl() }}" class="numeric-pagination-link">&lt;</a>
-                    @endif
-
-                    <!-- Numeric page links -->
-                    @foreach ($users->getUrlRange(max(1, $users->currentPage() - 5), min($users->lastPage(), $users->currentPage() + 4)) as $page => $url)
-                        <a href="{{ $url }}"
-                            class="numeric-pagination-link {{ $users->currentPage() == $page ? 'active' : '' }}">{{ $page }}</a>
-                    @endforeach
-
-                    <!-- Next button -->
-                    @if ($users->currentPage() < $users->lastPage())
-                        <a href="{{ $users->nextPageUrl() }}" class="numeric-pagination-link">&gt;</a>
-                    @endif
-
-                </div>
-            </nav>
-        </div>
     </section>
 
     <!-- client section -->
@@ -174,53 +268,41 @@
                 Our Students Feedback
             </h2>
             <p class="text-center">
-                There are many variations of passages of Lorem Ipsum available, but the majority hThere are many variations
-                of
-                passages of Lorem Ipsum available, but the majority h
-            </p>
+                Discover what our students have to say about their learning experiences through their valuable feedback.</p>
             <div class="layout_padding2">
                 <div class="client_container d-flex flex-column">
                     <div class="client_detail d-flex align-items-center">
                         <div class="client_img-box ">
-                            <img src="{{ asset('home/images/student.png') }}" alt="">
+                            <img style="border-radius: 40px"
+                                src="@if ($randomReview->user_image) {{ asset('storage/uploads/images/' . $randomReview->user_image) }}@else{{ asset('home/images/defualt_profile.jpg') }} @endif"
+                                alt="User Image">
                         </div>
                         <div class="client_detail-box">
                             <h4>
-                                Veniam Quis
+                                {{ $randomReview->name }}
                             </h4>
                             <span>
-                                (exercitation)
+                                @for ($i = 1; $i <= $randomReview->star_rating; $i++)
+                                <span><i class="fa fa-star text-warning"></i></span>
+                            @endfor
                             </span>
                         </div>
                     </div>
                     <div class="client_text mt-4">
                         <p>
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                            aliquip ex
-                            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-                            dolore eu
-                            fugiat
-                            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit
-                            anim id est laborum."
-
-
+                            {{ $randomReview->feedback }}
                         </p>
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-
-
-
     <!-- client section -->
 
-    <!-- contact section -->
 
+
+    <!-- contact section -->
     <section class="contact_section layout_padding-bottom">
         <div class="container">
 
@@ -237,18 +319,16 @@
                     <div class="row">
                         <div class="col-md-6 mx-auto">
                             <div class="contact-form">
-                                <form action="">
+                                <form action="{{ route('contact.store') }}" method="POST">
+                                    @csrf
                                     <div>
-                                        <input type="text" placeholder="Name">
+                                        <input type="text" name="name" placeholder="Name">
                                     </div>
                                     <div>
-                                        <input type="text" placeholder="Phone Number">
+                                        <input type="email" name="email" placeholder="Email">
                                     </div>
                                     <div>
-                                        <input type="email" placeholder="Email">
-                                    </div>
-                                    <div>
-                                        <input type="text" placeholder="Message" class="input_message">
+                                        <input type="text" name="message" placeholder="Message" class="input_message">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="submit" class="btn_on-hover">
@@ -256,6 +336,7 @@
                                         </button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -264,68 +345,79 @@
 
         </div>
     </section>
-
-
     <!-- end contact section -->
-
-    <!-- admission section -->
-    <section class="admission_section ">
-        <div class="container-fluid position-relative">
-            <div class="row h-100">
-                <div id="map" class="h-100 w-100 ">
-                </div>
-                <div class="container">
-                    <div class="admission_container position-absolute">
-                        <div class="admission_img-box">
-                            <img src="images/kidss.jpg" alt="">
-                        </div>
-                        <div class="admission_detail">
-                            <h3>
-                                Apply for Admission
-                            </h3>
-                            <p class="mt-3 mb-4">
-                                There are many variations of passages of Lorem Ipsum available, but the majority h
-                            </p>
-                            <div class="">
-                                <a href="" class="admission_btn btn_on-hover">
-                                    Read More
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+@endsection
 
 
+@section('script-content')
+    <link href="https://cdn.jsdelivr.net/npm/nouislider@16.0.3/distribute/nouislider.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@16.0.3/distribute/nouislider.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#subjectFilter').on('change', function() {
+                const selectedSubject = $(this).val().toLowerCase(); // Convert to lowercase
+                filterTeachersBySubject(selectedSubject);
+            });
 
+            function filterTeachersBySubject(subject) {
+                const cards = $('.card_teacher');
 
+                cards.each(function() {
+                    const subjectTags = $(this).find('.subject-tag');
+                    const showCard = subject === '' || subjectTags.filter(function() {
+                        return $(this).text().toLowerCase().includes(
+                            subject); // Case-insensitive comparison
+                    }).length > 0;
 
+                    if (showCard) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+            const minPriceSlider = $('#minPriceSlider');
+            const maxPriceSlider = $('#maxPriceSlider');
+            const minPriceDisplay = $('#minPriceDisplay'); // Add this element in your HTML
+            const maxPriceDisplay = $('#maxPriceDisplay'); // Add this element in your HTML
 
-    <!-- admission section -->
+            // Initialize the display values with the initial values from the sliders
+            minPriceDisplay.text(minPriceSlider.val());
+            maxPriceDisplay.text(maxPriceSlider.val());
 
+            minPriceSlider.on('input', function() {
+                filterTeachersByPrice();
+                minPriceDisplay.text($(this).val());
+            });
 
-    <!-- landing section -->
-    <section class="landing_section layout_padding">
-        <div class="container">
-            <h2 class="main-heading">
-                Free Multipurpose Responsive
+            maxPriceSlider.on('input', function() {
+                filterTeachersByPrice();
+                maxPriceDisplay.text($(this).val());
+            });
 
-            </h2>
-            <h2 class="main-heading number_heading">
-                Landing Page 2019
+            function filterTeachersByPrice() {
+                const minPrice = parseFloat(minPriceSlider.val());
+                const maxPrice = parseFloat(maxPriceSlider.val());
 
-            </h2>
-            <p class="landing_detail text-center">
-                There are many variations of passages of Lorem Ipsum available, but the majority There are many variations
-                of
-                passages of Lorem Ipsum available, but the majority h
+                const cards = $('.card_teacher');
 
-            </p>
-        </div>
-    </section>
+                cards.each(function() {
+                    const priceElements = $(this).find(
+                        '.card_teacher_body h3'); // Assuming the price is in an h3 element
 
-    <!-- end landing section -->
+                    const teacherPrice = parseFloat(priceElements.last().text().replace('$', '').trim());
+
+                    const showCard = (isNaN(minPrice) || teacherPrice >= minPrice) && (isNaN(maxPrice) ||
+                        teacherPrice <= maxPrice);
+
+                    if (showCard) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

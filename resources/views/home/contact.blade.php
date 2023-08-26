@@ -23,18 +23,16 @@
                     <div class="row">
                         <div class="col-md-6 mx-auto">
                             <div class="contact-form">
-                                <form action="">
+                                <form action="{{ route('contact.store') }}" method="POST">
+                                    @csrf
                                     <div>
-                                        <input type="text" placeholder="Name">
+                                        <input type="text" name="name" placeholder="Name">
                                     </div>
                                     <div>
-                                        <input type="text" placeholder="Phone Number">
+                                        <input type="email" name="email" placeholder="Email">
                                     </div>
                                     <div>
-                                        <input type="email" placeholder="Email">
-                                    </div>
-                                    <div>
-                                        <input type="text" placeholder="Message" class="input_message">
+                                        <input type="text" name="message" placeholder="Message" class="input_message">
                                     </div>
                                     <div class="d-flex justify-content-center">
                                         <button type="submit" class="btn_on-hover">

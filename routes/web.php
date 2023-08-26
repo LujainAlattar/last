@@ -19,7 +19,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\TeacherDahboardController;
 use App\Http\Controllers\SingleTeacherController;
-
+use App\Http\Controllers\ContactController;
 
 
 /*
@@ -54,6 +54,7 @@ Route::post('/review.store', [SingleTeacherController::class, 'reviewstore'])->n
 
 // Route for the 'contact' page
 Route::view('/contact', 'home.contact')->name('contact');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
 
 // route for registeration
@@ -156,3 +157,4 @@ Route::get('/teacher-showuserappointment-dashboard/{id}', [TeacherDahboardContro
 Route::get('/download/{filename}', [FileController::class, 'showAssignment'])
     ->where('filename', '(.*)')
     ->name('show-assignment');
+
