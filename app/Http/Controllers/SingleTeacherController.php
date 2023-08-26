@@ -60,33 +60,20 @@ class SingleTeacherController extends Controller
     }
 
 
-    public function processPayment(Request $request, $selectedClassId)
+    public function processPayment(Request $request)
     {
+
+        // dd($request->all());
         // Validate the payment form data
         $request->validate([
             'name' => 'required|string',
             'cardNumber' => 'required|string',
-            'expiryDate' => [
-                'required',
-                'string',
-                Rule::exists('card_expiry_dates', 'date')->where(function ($query) {
-                    // Check if expiry date is in the future
-                    return $query->where('date', '>', now());
-                }),
-                function ($attribute, $value, $fail) {
-                    // Custom validation: Check if expiry date is in or after the current month
-                    $expiryDate = Carbon::createFromFormat('Y-m', $value);
-                    $currentMonth = Carbon::now()->startOfMonth();
-                    if ($expiryDate->lessThan($currentMonth)) {
-                        $fail('The expiry date must be in or after the current month.');
-                    }
-                },
-            ],
+            'expiryDate' =>'required',
             'cvv' => 'required|string',
-            'amount' => 'required|numeric',
             'selectedAppointmentId' => 'required|integer',
             'selectedClassId' => 'required|integer',
         ]);
+        $selectedClassId = $request->input('selectedClassId');
 
         // Find the class using the class ID
         $class = Classes::find($selectedClassId);
@@ -94,22 +81,20 @@ class SingleTeacherController extends Controller
         // Calculate the total price (amount) based on the class price
         $amount = $class->price * $booking->hours;
 
+        $booking->user_id = Auth::id();
+        $booking->status = 1;
+        $booking->save();
+
         // Create a new payment record in the 'payments' table
         $payment = new Payment();
         $payment->book_id = $request->selectedAppointmentId;
         $payment->price = $amount;
         $payment->save();
 
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            $previousUrl = $_SERVER['HTTP_REFERER'];
-            if (strpos($previousUrl, route('teacher.show', $request->selectedClassId)) !== false) {
 
-                $request->session()->forget(['selectedAppointmentId', 'selectedClassId']);
-            }
-        }
-
+        $request->session()->forget(['selectedAppointmentId', 'selectedClassId']);
         // Redirect the user to a success page or back to the teacher details page with a success message
-        return redirect()->route('teacher.show', ['id' => $request->selectedClassId])->with('success', 'Payment successful!');
+        return redirect()->route('teacher.show', ['id' => $class->user->id])->with('success', 'Payment successful!');
     }
 
 
@@ -139,7 +124,7 @@ class SingleTeacherController extends Controller
             $review->user_image = auth()->user()->img;
         } else {
             // If guest, use the default profile image
-            $review->user_image = 'defualt_profile.jpg'; // Change 'default_profile.jpg' to the correct default image filename
+            $review->user_image = null; // Change 'default_profile.jpg' to the correct default image filename
         }
 
         $review->save();

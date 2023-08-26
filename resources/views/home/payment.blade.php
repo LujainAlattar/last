@@ -30,13 +30,15 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="cvv">CVV</label>
-                                    <input type="text" id="cvv" name="cvv" class="form-control" pattern="\d{3}" maxlength="3" required>
+                                    <input type="text" id="cvv" name="cvv" class="form-control" pattern="\d{3}"
+                                        maxlength="3" required>
                                 </div>
                             </div>
-                            <input type="hidden" id="selectedAppointmentId" name="selectedAppointmentId">
-                            <input type="hidden" id="selectedClassId" name="selectedClassId">
+                            <input type="hidden" id="selectedAppointmentId" name="selectedAppointmentId" value="">
+                            <input type="hidden" id="selectedClassId" name="selectedClassId" value="">
+
                             <button type="submit" class="btn btn-primary">Pay Now</button>
-                                <br><br><br><br><br>
+                            <br><br><br><br><br>
 
                         </form>
                     </div>
@@ -51,12 +53,11 @@
         document.addEventListener("DOMContentLoaded", function() {
             const selectedAppointmentId = localStorage.getItem('selectedAppointmentId');
             const selectedClassId = localStorage.getItem('selectedClassId');
-            const amount = localStorage.getItem('amount');
 
-            if (selectedAppointmentId && selectedClassId && amount) {
+            if (selectedAppointmentId && selectedClassId) {
+                // Set the values in the hidden input fields
                 document.getElementById('selectedAppointmentId').value = selectedAppointmentId;
                 document.getElementById('selectedClassId').value = selectedClassId;
-                document.getElementById('amount').value = amount;
             }
         });
     </script>
