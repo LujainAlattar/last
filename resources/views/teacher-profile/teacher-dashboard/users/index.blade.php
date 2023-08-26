@@ -90,7 +90,7 @@
                                     <td>{{ $student->email }}</td>
                                     <td>{{ $student->location }}</td>
                                     <td>
-                                        <a href="{{ route('teacher-notes-dashboard', $student->id) }}" class="btn"
+                                        <a href="{{ route('teacher-studenthistory-dashboard', $student->id) }}" class="btn"
                                             style="border: none; color: rgba(68, 38, 237, 0.848); padding: 8px 16px; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; transition-duration: 0.4s; cursor: pointer; border-radius: 4px;"><i
                                                 class="fa-solid fa-comments"></i></a>
                                     </td>

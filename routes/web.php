@@ -138,6 +138,7 @@ Route::put('/teacher-user-profile/updateimg/{id}', [TeacherProfileController::cl
 Route::get('/teacher-user-dashboard', [TeacherDahboardController::class, 'index'])->name('teacher-user-Dashboard');
 Route::get('/teacher-student-dashboard', [TeacherDahboardController::class, 'showstudent'])->name('teacher-student-dashboard');
 Route::get('/teacher-studentdata-dashboard', [TeacherDahboardController::class, 'showstudentdata'])->name('teacher-studentdata-dashboard');
+Route::get('/teacher-studenthistory-dashboard/{id}', [TeacherDahboardController::class, 'studenthistory'])->name('teacher-studenthistory-dashboard');
 Route::get('/teacher-assignment-dashboard', [TeacherDahboardController::class, 'assignments'])->name('teacher-assignment-dashboard');
 Route::get('/teacher-notes-dashboard', [TeacherDahboardController::class, 'notes'])->name('teacher-notes-dashboard');
 Route::put('/teacher-appointment-dashboard', [TeacherDahboardController::class, 'appointment'])->name('teacher-appointment-dashboard');
@@ -148,3 +149,9 @@ Route::put('/teacher-editappointment-dashboard/{id}', [TeacherDahboardController
 Route::get('/teacher-updateappointment-dashboard/{id}', [TeacherDahboardController::class, 'updateappointment'])->name('teacher-updateappointment-dashboard');
 Route::delete('/teacher-deleteappointment-dashboard/{id}', [TeacherDahboardController::class, 'deleteappointment'])->name('teacher-deleteappointment-dashboard');
 Route::get('/teacher-showuserappointment-dashboard/{id}', [TeacherDahboardController::class, 'showuserappointment'])->name('teacher-showuserappointment-dashboard');
+
+
+// download files
+Route::get('/download/{filename}', [FileController::class, 'showAssignment'])
+    ->where('filename', '(.*)')
+    ->name('show-assignment');

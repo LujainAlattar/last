@@ -1,29 +1,10 @@
 @extends('layout.adminMaster')
 
 @section('title')
-    <title>student edit</title>
+    <title>Notes & Assignments</title>
 @endsection
 
 @section('header-style')
-    <style>
-        input {
-            pointer-events: none;
-        }
-
-        .student-img-in {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .student-img-in img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
-    </style>
 @endsection
 
 
@@ -31,95 +12,34 @@
     <!-- Content wrapper -->
     <div class="content-wrapper">
         <!-- Content -->
-
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Show student</h4>
+            <h4 class="fw-bold py-3 mb-4">Add Asignment</h4>
             <div class="row">
                 <div class="col-xxl">
                     <div class="card mb-4">
                         <br>
                         <div class="card-body">
-                            <form action="" method="POST">
-                                <input type="hidden" name="id" value="{{ $student->id }}" id="id" />
-                                <div class="student-img-in">
-                                    <img src="{{ $student->img ? asset('storage/uploads/images/' . $student->img) : asset('home/images/default_profile.jpg') }}" alt="Student Image">
-                                </div>
+                            <form action="{{ route('teacher-assignment-dashboard') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="student_id" value="{{ $studentId }}">
+
                                 <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Name</label>
+                                    <label class="col-sm-2 col-form-label" for="file">Asignment</label>
                                     <div class="col-sm-10">
                                         <div class="input-group input-group-merge">
-                                            <span id="basic-icon-default-fullname2" class="input-group-text"><i
-                                                    class="bx bx-student"></i></span>
-                                            <input type="text" class="form-control" id="basic-icon-default-fullname"
-                                                name="name" placeholder="Name" aria-label="Name"
-                                                aria-describedby="basic-icon-default-fullname2"
-                                                value="{{ $student->name }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-age">Birthday</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span class="input-group-text"></span>
-                                            <input type="date" id="basic-icon-default-age" class="form-control"
-                                                name="birthday" placeholder="Age" aria-label="Age"
-                                                aria-describedby="basic-icon-default-Age" value="{{ $student->birthday }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-age">Age</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span class="input-group-text"></span>
-                                            <input type="text" id="basic-icon-default-age" class="form-control"
-                                                name="Age" placeholder="Age" aria-label="Age"
-                                                aria-describedby="basic-icon-default-Age" value="{{ $student->age }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 col-form-label" for="basic-icon-default-email">Email</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span class="input-group-text"><i class="bx bx-envelope"></i></span>
-                                            <input type="text" id="basic-icon-default-email" class="form-control"
-                                                name="email" placeholder="email@email.com" aria-label="email@email.com"
-                                                aria-describedby="basic-icon-default-email2" value="{{ $student->email }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 form-label" for="basic-icon-default-phone">Phone No</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span id="basic-icon-default-phone2" class="input-group-text"><i
-                                                    class="bx bx-phone"></i></span>
-                                            <input type="text" id="basic-icon-default-phone" name="phone"
-                                                class="form-control phone-mask" placeholder="07 **** ****"
-                                                aria-label="07 **** ****" aria-describedby="basic-icon-default-phone2"
-                                                value="{{ $student->phone }}" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label class="col-sm-2 form-label" for="basic-icon-default-phone">Location</label>
-                                    <div class="col-sm-10">
-                                        <div class="input-group input-group-merge">
-                                            <span id="basic-icon-default-location" class="input-group-text"><i
-                                                    class="fa-solid fa-location-dot"></i></span>
-                                            <input type="text" id="basic-icon-default-location"
-                                                class="form-control location-mask" placeholder="Location" name="location"
-                                                aria-label="Location" aria-describedby="basic-icon-default-location"
-                                                value="{{ $student->location }}" />
+                                            <span class="input-group-text"><i class="fa-solid fa-file-pen"></i></span>
+                                            <input type="file" class="form-control" id="file" name="file"
+                                                accept="image/*">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row justify-content-end">
                                     <div class="col-sm-10">
-                                        <a href="{{ route('teacher-user-Dashboard') }}" class="btn btn-primary">Back</a>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <a href="{{ route('teacher-student-dashboard') }}" class="btn btn-primary">Back</a>
                                     </div>
                                 </div>
                             </form>
@@ -128,7 +48,74 @@
                 </div>
             </div>
         </div>
-        <!-- / Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4">Add Notes</h4>
+            <div class="row">
+                <div class="col-xxl">
+                    <div class="card mb-4">
+                        <br>
+                        <div class="card-body">
+                            <form action="{{ route('teacher-notes-dashboard') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="student_id" value="{{ $studentId }}">
+
+                                <div class="row mb-3">
+                                    <label class="col-sm-2 col-form-label" for="note">Notes</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <span class="input-group-text"><i class="fa-solid fa-pen-to-square"></i></span>
+                                            <input type="text" class="form-control" id="note" name="note">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-end">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        <a href="{{ route('teacher-student-dashboard') }}" class="btn btn-primary">Back</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4">Previous Notes & Assignments</h4>
+        <div class="row">
+            <div class="col-xxl">
+                <div class="card mb-4">
+                    <br>
+                    <div class="card-body">
+                        @if ($previousNotes->isEmpty())
+                            <p>No previous notes found for this student.</p>
+                        @else
+                            <ol>
+                                @foreach ($previousNotes as $note)
+                                    @if ($note->assignment == null)
+                                        <li> {{ $note->note }}</li>
+                                    @else
+                                        <li> {{ $note->assignment }} :
+                                            <a href="{{ route('show-assignment', $note->assignment) }}"
+                                                target="_blank">Download Assignment</a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ol>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
