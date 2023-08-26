@@ -14,6 +14,7 @@ class Booking extends Model
         'class_id',
         'start_time',
         'end_time',
+        'hours',
         'status',
     ];
 
